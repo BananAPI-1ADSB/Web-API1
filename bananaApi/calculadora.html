@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📐 Calculadora BANANAPI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="header-calc">
+    <div class="container">
+      <a href="home.html">
+        <h1 class="titulo">BananaAPI</h1>
+      </a>
+      <ul class="navbar">
+        <li>
+          <span><a href="home.html">Inicial</a></span>
+        </li>
+          <li>|</li>
+        <li>
+          <span><a href="#">Financeiro</a></span>
+        </li>
+        <li>|</li>
+            <li class="">
+          <span><a href="cadastro.html">Cadastro</a></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+    <h1 style="margin-top: 40px;">Calculadora Financeira</h1>
+    <h2>Controle sobre maturação das bananas</h2>
+    <div class="container-calc">
+      <div class="caixa1-calc">
+        <div class="perguntas-calc">Entrada mensal de bananas:</div>
+        <input type="number" id="input_qtdBananas" placeholder="Kg" /> <br />
+        <div class="perguntas-calc">Atual porcentagem de perda:</div>
+        <input type="number" id="input_perda" placeholder="EX 40 ou 60" />
+        <br />
+        <div class="perguntas-calc">Valor investido:</div>
+        <input type="number" id="input_valorCompra" placeholder="R$ por Kg" />
+        <br />
+        <div class="perguntas-calc">Valor pretendido na venda:</div>
+        <input type="number" id="input_valorVenda" placeholder="R$ por Kg" />
+        <br />
+        <button class="botao_cima-calc" onclick="emitir()">
+          Emitir o relatório
+        </button>
+        <button class="botao_baixo-calc" onclick="reiniciar()">⟳</button>
+      </div>
+      <div id="div_mensagem-calc"></div>
+    </div>
+  </body>
+</html>
+<script>
+  let simulacao = 1;
+
+  function reiniciar() {
+    document.getElementById('div_mensagem-calc').style.display = "none";
+    document.getElementById('div_mensagem-calc').innerHTML = ``;
+    input_qtdBananas.value = ``;
+    input_perda.value = ``;
+    input_valorCompra.value = ``;
+    input_valorVenda.value = ``;
+    simulacao = 1;
+  }
+
+  function emitir() {
+    document.getElementById('div_mensagem-calc').style.display = "block";
+    
+    let qtdBananas = Number(input_qtdBananas.value);
+    let perda = Number(input_perda.value);
+    let valorCompra = Number(input_valorCompra.value);
+    let valorVenda = Number(input_valorVenda.value);
+
+    // nosso projeto diminui 15% das perdas
+    let perdaComApi = perda * 0.85;
+
+    // Cálculo de kg
+    let kgPerdidosAtual = qtdBananas * (perda / 100);
+    let kgPerdidosComProjeto = qtdBananas * (perdaComApi / 100);
+    let bananasSalvas = kgPerdidosAtual - kgPerdidosComProjeto;
+    let valorTotalInvestido = valorCompra * qtdBananas;
+
+    // Cálculo Financeiro
+    let faturamentoAtual = (qtdBananas - kgPerdidosAtual) * valorVenda;
+    let faturamentoPrevisto = (qtdBananas - kgPerdidosComProjeto) * valorVenda;
+    let lucroExtra = bananasSalvas * valorVenda;
+
+    document.getElementById('div_mensagem-calc').innerHTML += `<div class="mensagem" style=""><br> <b>Simulação: ${simulacao}</b> <br>
+    Com nosso projeto, reduzimos o impacto da temperatura na sua perda.<br>
+    Sua perda total cai de
+    <b style="color:red">${perda}%</b> para <b style="color:green">${perdaComApi}%</b>.<br><br>
+
+
+    Isso evita o desperdício de <b>${bananasSalvas.toFixed(0)} kg</b> de bananas mensalmente.<br><br>
+
+    <b>${valorTotalInvestido.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}</b> é o valor do seu estoque. <br> <br>
+
+    <b style="color:red">${faturamentoAtual.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}</b> = Seu faturamento atual. (${perda}% de perda)<br>
+    <b style="color:green">${faturamentoPrevisto.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })} </b>
+    = Seu faturamento com <b style="color:#deb500">BananAPI</b>. (${perdaComApi}% de perda)<br>
+    Faturamento recuperado: <b style="color:green">${lucroExtra.toLocaleString(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL",
+      },
+    )}</b> <br><br></div>`;
+
+    simulacao++;
+  }
+</script>
