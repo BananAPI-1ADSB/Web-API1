@@ -1,0 +1,39 @@
+/*
+    ESSE ARQUIVO CONTEM AS BASES DE TODAS AS PAGINAS
+*/
+
+
+* {
+  box-sizing: border-box;
+  font-family: Poppins, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #edf3f8;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: gold;
+}
+
+h1 {
+  font-size: 32px;
+  color: #1e293b;
+}
+
+h2 {
+  color: #64748b;
+  font-weight: normal;
+}

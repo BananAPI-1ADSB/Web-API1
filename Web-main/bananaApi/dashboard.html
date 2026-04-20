@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="120x120"
+      href="Web-main/Web-main/bananaApi/assets/logo_Bananapi.png"
+    />
+    <title>Dashboard BananAPI</title>
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!--SIDEBAR/HEADER-->
+    <div class="wrapper-pagina-toda">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <h2 class="logo">Banana<span>API</span></h2>
+        <ul class="menu">
+          <li><a class="active" href="#">Dashboard</a></li>
+          <!--<li><a href="#">Temperatura</a></li>
+      <li><a href="#">Alertas</a></li>
+      <li><a href="#">Relatórios</a></li>-->
+          <li class="botao-sair">
+            <a href="home.html">Sair</a>
+          </li>
+        </ul>
+      </aside>
+
+      <div class="conteudo">
+        <div id="saudacoes"></div>
+        <br /><br /><br />
+        <h2>Temperatura Atual das Câmaras:</h2>
+        <div id="cards_container"></div>
+
+        <br><br>
+
+        <div class="chart_section">
+          <div style="display: flex; flex-direction: column">
+            <select id="select_camara">
+              <option>Câmara 1</option>
+              <option disabled>Câmara 2</option>
+              <option disabled>Câmara 3</option>
+              <option disabled>Câmara 4</option>
+              <option disabled>Câmara 5</option>
+              <option disabled>Câmara 6</option>
+              <option disabled>Câmara 7</option>
+              <option disabled>Câmara 8</option>
+              <option disabled>Câmara 9</option>
+              <option disabled>Câmara 10</option>
+            </select>
+
+            <div class="grafico">
+              <canvas id="sensorAnalogico"></canvas>
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+          <div id="status_container">
+            <div id="status_span"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // sessao ppra pegar a hora e dar a mensagem correspondente
+      const agora = new Date();
+      const hora = agora.getHours();
+
+      let msg = ``;
+      if (hora < 12) {
+        msg = `Bom dia! ☀️`;
+      } else if (hora < 18) {
+        msg = `Boa tarde! 🌥️`;
+      } else {
+        msg = `Boa noite! 🌙`;
+      }
+      saudacoes.innerHTML = `<h1>${msg}</h1>`;
+      // fim da sessao de pegar a hora
+
+      var sensorAnalogico = new Chart(
+        document.getElementById("sensorAnalogico").getContext("2d"),
+        {
+          type: "line",
+          data: {
+            datasets: [
+              {
+                label: "Temperatura da câmera 1 do entreposto",
+                borderColor: "#63B1BC",
+                backgroundColor: "#ED145B",
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              x: {
+                beginAtZero: true,
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "(%)",
+                },
+                beginAtZero: true,
+              },
+            },
+          },
+        },
+      );
+      var paginacao = {};
+      var tempo = {};
+
+      function obterDados(grafico, endpoint) {
+        fetch("http://localhost:3300/sensores/" + endpoint)
+          .then((response) => response.json())
+          .then((valores) => {
+            if (paginacao[endpoint] == null) {
+              paginacao[endpoint] = 0;
+            }
+            if (tempo[endpoint] == null) {
+              tempo[endpoint] = 0;
+            }
+
+            var ultimaPaginacao = paginacao[endpoint];
+            paginacao[endpoint] = valores.length;
+            valores = valores.slice(ultimaPaginacao);
+
+            valores.forEach((valor) => {
+              if (
+                grafico.data.labels.length == 10 &&
+                grafico.data.datasets[0].data.length == 10
+              ) {
+                grafico.data.labels.shift();
+                grafico.data.datasets[0].data.shift();
+              }
+
+              grafico.data.labels.push(tempo[endpoint]++);
+              grafico.data.datasets[0].data.push(parseFloat(valor));
+              grafico.update();
+            });
+
+            rendenizarCards(valores);
+          })
+          .catch((error) => console.error("Erro ao obter dados:", error));
+      }
+
+      function rendenizarCards(temperaturas) {
+        const cards = [];
+
+        for (let contador = temperaturas.length; contador >= 1; contador--) {
+          // mock
+          const camara = temperaturas.length + 1 - contador;
+
+          const temperatura = temperaturas[contador - 1];
+          if (temperatura < 12 || temperatura > 25) {
+            cor = "#df2e2e"; // vermelho
+          } else if (temperatura < 13 || temperatura > 20) {
+            cor = "#F0D75B"; // amarelo
+          } else {
+            cor = "#65b85d"; // verde
+          }
+
+          const conteudo = `
+                    <div id="card" style="background-color: ${cor}";>
+                        <p style="font: bold; font-size: small;">Câmara ${camara}</p>
+                        <span style="font: bolder; font-size: x-large"><i>${temperatura}°</i></span>
+                    </div>
+                `;
+
+          cards.push(conteudo);
+        }
+
+        cards_container.innerHTML = cards.toString().replaceAll(",", "");
+      }
+
+      function rendenizarStatus(temperaturas) {
+        let status;
+        const tag = document.getElementById("status_container");
+
+        for (let contador = temperaturas.length; contador >= 1; contador--) {
+          const item = temperaturas[contador - 1];
+
+          if (item < 12 || item > 25) {
+            status = "Crítico!<br>A alteração nas temperaturas das câmaras é requerida urgentemente!";
+            tag.style.backgroundColor = "#df2e2e"; //vermelho
+          } else if ((item < 13 || item > 20) && status !== "Crítico") {
+            status = "Cuidado";
+            tag.style.backgroundColor = "#F0D75B"; //amarelo
+          } else if (status !== "Crítico" || status !== "Cuidado") {
+            status = "Estável";
+            tag.style.backgroundColor = "#65b85d"; //verde
+          }
+        }
+
+        status_span.innerHTML = status;
+      }
+
+      setInterval(() => {
+        //obterDados(sensorAnalogico, 'analogico');
+        //obterDados(sensorDigital, 'digital');
+        rendenizarCards([10, 20, 30, 12, 50, 60, 70, 80, 90, 24]);
+        rendenizarStatus([10, 20, 30, 12, 50, 60, 70, 80, 90, 24]);
+      }, 1000);
+    </script>
+  </body>
+</html>

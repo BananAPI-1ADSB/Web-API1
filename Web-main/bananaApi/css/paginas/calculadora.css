@@ -1,0 +1,14 @@
+.container-calc {
+  display: flex;
+  gap: 40px;
+}
+
+.caixa1-calc {
+  width: 400px;
+  background: white;
+  border-radius: 15px;
+}
+
+.botao_cima-calc {
+  background-color: gold;
+}

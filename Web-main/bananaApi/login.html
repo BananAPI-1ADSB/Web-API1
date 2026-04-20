@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>BananaAPI</title>
+</head>
+<body>
+    <div class="header">
+    <div class="container">
+      <a href="home.html">
+        <h1 class="titulo">BananaAPI</h1>
+      </a>
+      <ul class="navbar">
+        <li>
+          <span><a href="home.html">Inicial</a></span>
+        </li>
+        <li>|</li>
+        <li>
+          <span><a href="calculadora.html">Financeiro</a></span>
+        </li>
+        <li>|</li>
+        <li>
+          <span><a href="">Monitoramento</a></span>
+        </li>      
+      </ul>
+    </div>
+  </div>
+  <div class="login">
+    <div class="container">
+      <div class="card card-cadastro">
+        <h2>Bem-vindo!</h2>
+        <div class="formulario">
+          <div class="campo">
+            <label for="email_login">E-mail:</label>
+            <input id="email_login" type="email" placeholder="meuemail@provedor.com" oninput="limparErro('email_login')" />
+            <span class="erro" id="erro_email_login"></span>
+          </div>
+          <div class="campo">
+            <label for="senha_login">Senha:</label>
+            <input id="senha_login" type="password" placeholder="••••••" oninput="limparErro('senha_login')" />
+            <span class="erro" id="erro_senha_login"></span>
+          </div>
+          <button type="button" class="botao" onclick="validarLogin()">Fazer Login</button>
+          <p class="login-link">Não possui conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
+        </div>
+        </div>
+  </div>
+</body>
+<script>
+
+  function limparErro(campo) {
+    const erroId = `erro_${campo}`;
+    window[erroId].textContent = '';
+    window[campo].classList.remove('input-erro');
+  }
+  
+ 
+  function validarLogin() {
+    let isValido = true;
+    
+    // Validar email
+    if (email_login.value.trim() === '') {
+      erro_email_login.textContent = 'E-mail é obrigatório';
+      email_login.classList.add('input-erro');
+      isValido = false;
+    } else if (!email_login.value.includes('@') || !email_login.value.includes('.')) {
+      erro_email_login.textContent = 'E-mail inválido';
+      email_login.classList.add('input-erro');
+      isValido = false;
+    } else {
+      erro_email_login.textContent = '';
+      email_login.classList.remove('input-erro');
+    }
+    
+    // Validar senha
+    if (senha_login.value === '') {
+      erro_senha_login.textContent = 'Senha é obrigatória';
+      senha_login.classList.add('input-erro');
+      isValido = false;
+    } else {
+      erro_senha_login.textContent = '';
+      senha_login.classList.remove('input-erro');
+    }
+    
+    if (isValido) {
+      // Verificar se os dados correspondem ao cadastro salvo
+      const usuarioCadastrado = obterUsuario();
+      
+      if (!usuarioCadastrado) {
+        erro_email_login.textContent = 'Nenhuma conta cadastrada encontrada';
+        email_login.classList.add('input-erro');
+        return;
+      }
+      
+      if (email_login.value.trim() === usuarioCadastrado.email && senha_login.value === usuarioCadastrado.senha) {
+        // Login bem-sucedido
+        alert('Login realizado com sucesso!');
+        window.location.href = '../../../index.html';
+      } else {
+        erro_email_login.textContent = 'E-mail ou senha incorretos';
+        email_login.classList.add('input-erro');
+        erro_senha_login.textContent = 'E-mail ou senha incorretos';
+        senha_login.classList.add('input-erro');
+      }
+    }
+  }
+</script>
