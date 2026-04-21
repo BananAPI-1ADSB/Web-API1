@@ -35,7 +35,7 @@
         <h2>Temperatura Atual das Câmaras:</h2>
         <div id="cards_container"></div>
 
-        <br><br>
+        <br /><br />
 
         <div class="chart_section">
           <div style="display: flex; flex-direction: column">
@@ -184,7 +184,8 @@
           const item = temperaturas[contador - 1];
 
           if (item < 12 || item > 25) {
-            status = "Crítico!<br>A alteração nas temperaturas das câmaras é requerida urgentemente!";
+            status =
+              "Crítico!<br>A alteração nas temperaturas das câmaras é requerida urgentemente!";
             tag.style.backgroundColor = "#df2e2e"; //vermelho
           } else if ((item < 13 || item > 20) && status !== "Crítico") {
             status = "Cuidado";
