@@ -1,0 +1,13 @@
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.card-cadastro {
+  width: 600px;
+  background: white;
+}
+
+.erro {
+  color: red;
+}
