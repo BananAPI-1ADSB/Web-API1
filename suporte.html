@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>BananaAPI - Suporte</title>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <a href="home.html">
+          <h1 class="titulo">BananaAPI</h1>
+        </a>
+        <ul class="navbar">
+          <li><span><a href="home.html">Inicial</a></span></li>
+          <li>|</li>
+          <li><span><a href="calculadora.html">Financeiro</a></span></li>
+          <li>|</li>
+          <li><span><a href="">Monitoramento</a></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="login">
+      <div class="container">
+        <div class="card card-cadastro">
+          <h2>Suporte</h2>
+          <p style="color: #64748b; font-size: 14px; margin: -16px 0 20px;">
+            Tire suas dúvidas com o nosso assistente virtual.
+          </p>
+
+          <div class="chat-box" id="chat_box">
+            <div class="mensagem mensagem-ia">
+              Olá! Sou o assistente da BananaAPI. Como posso te ajudar hoje?
+            </div>
+          </div>
+
+          <div class="input-area">
+            <input
+              id="input_mensagem"
+              type="text"
+              placeholder="Digite sua dúvida..."
+              onkeydown="if(event.key === 'Enter') enviarMensagem()"
+            />
+            <button class="btn-enviar" onclick="enviarMensagem()">
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function enviarMensagem() {
+        const texto = input_mensagem.value.trim();
+        if (texto === ""){
+        return alert("Por favor, digite algo na caixa de mensagem.");
+        }  
+          
+
+        adicionarMensagem(texto, "usuario");
+        input_mensagem.value = "";
+      }
+
+      function adicionarMensagem(texto, tipo) {
+        const div = document.createElement("div");
+        div.classList.add("mensagem");
+        if (tipo === "usuario") {
+          div.classList.add("mensagem-usuario");
+        } else {
+          div.classList.add("mensagem-ia");
+        }
+        div.innerHTML = texto;
+        chat_box.innerHTML += div.outerHTML;
+      }
+    </script>
+  </body>
+</html>
