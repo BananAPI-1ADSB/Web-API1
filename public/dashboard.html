@@ -6,7 +6,7 @@
       rel="icon"
       type="image/png"
       sizes="120x120"
-      href="Web-main/Web-main/bananaApi/assets/logo_Bananapi.png"
+      href="/public/assets/logo_Bananapi.png"
     />
     <title>Dashboard BananAPI</title>
     <link rel="stylesheet" href="css/dashboard.css" />
@@ -142,8 +142,30 @@
               grafico.update();
             });
 
-            rendenizarCards([20, 23, 21, 19, 20, 19, 18, 19, 30, valores[valores.length-1]]);
-            rendenizarStatus([20, 23, 21, 19, 20, 19, 18, 19, 30, valores[valores.length-1]]);
+            rendenizarCards([
+              20,
+              23,
+              21,
+              19,
+              20,
+              19,
+              18,
+              19,
+              30,
+              valores[valores.length - 1],
+            ]);
+            rendenizarStatus([
+              20,
+              23,
+              21,
+              19,
+              20,
+              19,
+              18,
+              19,
+              30,
+              valores[valores.length - 1],
+            ]);
           })
           .catch((error) => console.error("Erro ao obter dados:", error));
       }
