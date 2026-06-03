@@ -1,834 +1,791 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-<<<<<<< HEAD:web/dashboard.html
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard BANANAPI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard BANANAPI</title>
 
-=======
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="120x120"
-      href="/public/assets/logo_Bananapi.png"
-    />
-    <title>Dashboard BananAPI</title>
-    <link rel="stylesheet" href="css/dashboard.css" />
->>>>>>> 751a8e75fce0c02ac9f4dcee8f1b7d915cb979dc:public/dashboard.html
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <style>
+<style>
 
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: Arial, Helvetica, sans-serif;
+}
 
-        body{
-            background-color: #fffdf5;
-            color: #222;
-        }
+body{
+background-color: #fffdf5;
+color: #222;
+}
 
-        .layout{
-            display: flex;
-            min-height: 100vh;
-        }
+.layout{
+display: flex;
+min-height: 100vh;
+}
 
-        .sidebar{
-            width: 250px;
-            background-color: #facc15;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+.sidebar{
+width: 250px;
+background-color: #facc15;
+padding: 30px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
 
-        .logo{
-            font-size: 30px;
-            color: #222;
-            margin-bottom: 40px;
-        }
+.logo{
+font-size: 30px;
+color: #222;
+margin-bottom: 40px;
+}
 
-        .logo span{
-            color: white;
-        }
+.logo span{
+color: white;
+}
 
-        .sidebar nav{
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+.sidebar nav{
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
 
-        .sidebar a{
-            text-decoration: none;
-            background-color: white;
-            color: #222;
-            padding: 14px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
+.sidebar a{
+text-decoration: none;
+background-color: white;
+color: #222;
+padding: 14px;
+border-radius: 10px;
+font-weight: bold;
+}
 
-        .sidebar .active{
-            background-color: #222;
-            color: white;
-        }
+.sidebar .active{
+background-color: #222;
+color: white;
+}
 
-        .logout{
-            text-align: center;
-            background-color: #ef4444 !important;
-            color: white !important;
-        }
+.logout{
+text-align: center;
+background-color: #ef4444 !important;
+color: white !important;
+}
 
-        .conteudo{
-            flex: 1;
-            padding: 35px;
-        }
+.conteudo{
+flex: 1;
+padding: 35px;
+}
 
-        .topo{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+.topo{
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 30px;
+}
 
-        .topo h2{
-            font-size: 32px;
-            color: #222;
-        }
+.topo h2{
+font-size: 32px;
+color: #222;
+}
 
-        .topo p{
-            color: #555;
-            margin-top: 5px;
-        }
+.topo p{
+color: #555;
+margin-top: 5px;
+}
 
-        .topo-info{
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            color: #222;
-            font-weight: bold;
-        }
+.topo-info{
+display: flex;
+align-items: center;
+gap: 20px;
+color: #222;
+font-weight: bold;
+}
 
-        .status-geral{
-            background-color: #dcfce7;
-            color: #15803d;
-            padding: 10px 15px;
-            border-radius: 10px;
-        }
+.status-geral{
+background-color: #dcfce7;
+color: #15803d;
+padding: 10px 15px;
+border-radius: 10px;
+}
 
-        .kpis{
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+.kpis{
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 20px;
+margin-bottom: 30px;
+}
 
-        .kpi{
-            background-color: white;
-            border-radius: 18px;
-            padding: 20px;
-            border: 2px solid #222;
-        }
+.kpi{
+background-color: white;
+border-radius: 18px;
+padding: 20px;
+border: 2px solid #222;
+}
 
-        .kpi-topo{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.kpi-topo{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
 
-        .kpi span{
-            color: #555;
-        }
+.kpi span{
+color: #555;
+}
 
-        .kpi h1,
-        .kpi h2{
-            font-size: 32px;
-            margin-top: 10px;
-            color: #222;
-        }
+.kpi h1,
+.kpi h2{
+font-size: 32px;
+margin-top: 10px;
+color: #222;
+}
 
-        .kpi p{
-            margin-top: 6px;
-            color: #666;
-        }
+.kpi p{
+margin-top: 6px;
+color: #666;
+}
 
-        .destaque{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.destaque{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
 
-        .kpi-direita{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
+.kpi-direita{
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+}
 
-        .indicador{
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
+.indicador{
+width: 12px;
+height: 12px;
+border-radius: 50%;
+}
 
-        .verde-indicador{
-            background-color: #22c55e;
-        }
+.verde-indicador{
+background-color: #22c55e;
+}
 
-        .amarelo-indicador{
-            background-color: #f59e0b;
-        }
+.amarelo-indicador{
+background-color: #f59e0b;
+}
 
-        .vermelho-indicador{
-            background-color: #ef4444;
-        }
+.vermelho-indicador{
+background-color: #ef4444;
+}
 
-        .verde-kpi{
-            border-left: 8px solid #22c55e;
-        }
+.verde-kpi{
+border-left: 8px solid #22c55e;
+}
 
-        .amarelo-kpi{
-            border-left: 8px solid #f59e0b;
-        }
+.amarelo-kpi{
+border-left: 8px solid #f59e0b;
+}
 
-        .vermelho-kpi{
-            border-left: 8px solid #ef4444;
-        }
+.vermelho-kpi{
+border-left: 8px solid #ef4444;
+}
 
-        .verde{
-            background-color: #dcfce7;
-            color: #15803d;
-        }
+.verde{
+background-color: #dcfce7;
+color: #15803d;
+}
 
-        .amarelo{
-            background-color: #fef3c7;
-            color: #b45309;
-        }
+.amarelo{
+background-color: #fef3c7;
+color: #b45309;
+}
 
-        .vermelho{
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
+.vermelho{
+background-color: #fee2e2;
+color: #b91c1c;
+}
 
-        .kpi-status{
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+.kpi-status{
+padding: 8px 12px;
+border-radius: 10px;
+font-size: 12px;
+font-weight: bold;
+}
 
-        .camaras-grid{
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+.camaras-grid{
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 20px;
+margin-bottom: 30px;
+}
 
-        .camara-card{
-            background-color: white;
-            border: 2px solid #222;
-            border-radius: 18px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.camara-card{
+background-color: white;
+border: 2px solid #222;
+border-radius: 18px;
+padding: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
 
-        .camara-card span{
-            color: #555;
-        }
+.camara-card span{
+color: #555;
+}
 
-        .camara-card h2{
-            color: #222;
-            margin-top: 8px;
-            font-size: 30px;
-        }
+.camara-card h2{
+color: #222;
+margin-top: 8px;
+font-size: 30px;
+}
 
-        .badge{
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+.badge{
+padding: 8px 12px;
+border-radius: 10px;
+font-size: 12px;
+font-weight: bold;
+}
 
-        .estavel{
-            background-color: #dcfce7;
-            color: #15803d;
-        }
+.estavel{
+background-color: #dcfce7;
+color: #15803d;
+}
 
-        .alerta{
-            background-color: #fef3c7;
-            color: #b45309;
-        }
+.alerta{
+background-color: #fef3c7;
+color: #b45309;
+}
 
-        .critico{
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
+.critico{
+background-color: #fee2e2;
+color: #b91c1c;
+}
 
-        .monitoramento{
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+.monitoramento{
+display: grid;
+grid-template-columns: 2fr 1fr;
+gap: 20px;
+margin-bottom: 30px;
+}
 
-        .grafico-area,
-        .painel-status,
-        .alertas{
-            background-color: white;
-            border: 2px solid #222;
-            border-radius: 18px;
-            padding: 24px;
-        }
+.grafico-area,
+.painel-status,
+.alertas{
+background-color: white;
+border: 2px solid #222;
+border-radius: 18px;
+padding: 24px;
+}
 
-        .grafico-header{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+.grafico-header{
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
 
-        select{
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            background-color: white;
-            color: #222;
-        }
+select{
+padding: 10px;
+border-radius: 10px;
+border: 1px solid #ccc;
+background-color: white;
+color: #222;
+}
 
-        .painel-status{
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+.painel-status{
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
 
-        .status-box{
-            padding: 18px;
-            border-radius: 12px;
-            font-weight: bold;
-        }
+.status-box{
+padding: 18px;
+border-radius: 12px;
+font-weight: bold;
+}
 
-        .info-status{
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+.info-status{
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
 
-        .info-status span{
-            color: #666;
-        }
+.info-status span{
+color: #666;
+}
 
-        .estatisticas-alertas{
-            display: grid;
-            grid-template-columns: 1fr;
-        }
+.estatisticas-alertas{
+display: grid;
+grid-template-columns: 1fr;
+}
 
-        .alertas{
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
+.alertas{
+display: flex;
+flex-direction: column;
+gap: 18px;
+}
 
-        .alerta-item{
-            padding: 18px;
-            border-radius: 12px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
+.alerta-item{
+padding: 18px;
+border-radius: 12px;
+display: flex;
+gap: 15px;
+align-items: center;
+}
 
-        @media screen and (max-width: 1400px){
+@media screen and (max-width: 1400px){
 
-            .kpis{
-                grid-template-columns: repeat(2, 1fr);
-            }
+.kpis{
+grid-template-columns: repeat(2, 1fr);
+}
 
-            .camaras-grid{
-                grid-template-columns: repeat(2, 1fr);
-            }
+.camaras-grid{
+grid-template-columns: repeat(2, 1fr);
+}
 
-            .monitoramento{
-                grid-template-columns: 1fr;
-            }
+.monitoramento{
+grid-template-columns: 1fr;
+}
 
-        }
+}
 
-    </style>
+</style>
 </head>
 
 <body>
 
 <div class="layout">
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <div>
+<div>
 
-            <h1 class="logo">
-                BANANA<span>API</span>
-            </h1>
+<h1 class="logo">
+BANANA<span>API</span>
+</h1>
 
-            <nav>
-                <a class="active" href="#">Dashboard</a>
-                <a href="#">Monitoramento</a>
-                <a href="#">Alertas</a>
-                <a href="#">Relatórios</a>
-            </nav>
+<nav>
+<a class="active" href="#">Dashboard</a>
+<a href="#">Monitoramento</a>
+<a href="#">Alertas</a>
+<a href="#">Relatórios</a>
+</nav>
 
-        </div>
+</div>
 
-        <a class="logout" href="home.html">
-            Sair
-        </a>
+<a class="logout" href="home.html">
+Sair
+</a>
 
-    </aside>
+</aside>
 
-    <main class="conteudo">
+<main class="conteudo">
 
-        <header class="topo">
+<header class="topo">
 
-            <div>
-                <h2 id="saudacao"></h2>
-                <p>Monitoramento inteligente de bananas nanicas</p>
-            </div>
+<div>
+<h2 id="saudacao"></h2>
+<p>Monitoramento inteligente de bananas nanicas</p>
+</div>
 
-            <div class="topo-info">
+<div class="topo-info">
 
-                <span id="horaAtual"></span>
+<span id="horaAtual"></span>
 
-<<<<<<< HEAD:web/dashboard.html
-                <div class="status-geral">
-                    Sistema operacional
-                </div>
-=======
-            rendenizarCards([
-              20,
-              23,
-              21,
-              19,
-              20,
-              19,
-              18,
-              19,
-              30,
-              valores[valores.length - 1],
-            ]);
-            rendenizarStatus([
-              20,
-              23,
-              21,
-              19,
-              20,
-              19,
-              18,
-              19,
-              30,
-              valores[valores.length - 1],
-            ]);
-          })
-          .catch((error) => console.error("Erro ao obter dados:", error));
-      }
->>>>>>> 751a8e75fce0c02ac9f4dcee8f1b7d915cb979dc:public/dashboard.html
+<div class="status-geral">
+Sistema operacional
+</div>
 
-            </div>
+</div>
 
-        </header>
+</header>
 
-        <section class="kpis">
+<section class="kpis">
 
-            <div class="kpi destaque verde-kpi" id="kpiTempoReal">
+<div class="kpi destaque verde-kpi" id="kpiTempoReal">
 
-                <div>
+<div>
 
-                    <span>Câmara principal</span>
+<span>Câmara principal</span>
 
-                    <h1 id="temperaturaTempoReal">
-                        16°C
-                    </h1>
+<h1 id="temperaturaTempoReal">
+16°C
+</h1>
 
-                </div>
+</div>
 
-                <div class="kpi-direita">
+<div class="kpi-direita">
 
-                    <div class="indicador verde-indicador"></div>
+<div class="indicador verde-indicador"></div>
 
-                    <div class="kpi-status verde">
-                        ONLINE
-                    </div>
+<div class="kpi-status verde">
+ONLINE
+</div>
 
-                </div>
+</div>
 
-            </div>
+</div>
 
-            <div class="kpi verde-kpi">
+<div class="kpi verde-kpi">
 
-                <div class="kpi-topo">
+<div class="kpi-topo">
 
-                    <span>Câmaras estáveis</span>
+<span>Câmaras estáveis</span>
 
-                    <div class="indicador verde-indicador"></div>
+<div class="indicador verde-indicador"></div>
 
-                </div>
+</div>
 
-                <h2>8</h2>
+<h2>8</h2>
 
-                <p>Operando normalmente</p>
+<p>Operando normalmente</p>
 
-            </div>
+</div>
 
-            <div class="kpi amarelo-kpi">
+<div class="kpi amarelo-kpi">
 
-                <div class="kpi-topo">
+<div class="kpi-topo">
 
-                    <span>Câmaras em atenção</span>
+<span>Câmaras em atenção</span>
 
-                    <div class="indicador amarelo-indicador"></div>
+<div class="indicador amarelo-indicador"></div>
 
-                </div>
+</div>
 
-                <h2>2</h2>
+<h2>2</h2>
 
-                <p>Oscilação identificada</p>
+<p>Oscilação identificada</p>
 
-            </div>
+</div>
 
-            <div class="kpi verde-kpi">
+<div class="kpi verde-kpi">
 
-                <div class="kpi-topo">
+<div class="kpi-topo">
 
-                    <span>Sensores ativos</span>
+<span>Sensores ativos</span>
 
-                    <div class="indicador verde-indicador"></div>
+<div class="indicador verde-indicador"></div>
 
-                </div>
+</div>
 
-                <h2>9/10</h2>
+<h2>9/10</h2>
 
-                <p>Monitoramento ativo</p>
+<p>Monitoramento ativo</p>
 
-            </div>
+</div>
 
-            <div class="kpi amarelo-kpi">
+<div class="kpi amarelo-kpi">
 
-                <div class="kpi-topo">
+<div class="kpi-topo">
 
-                    <span>Alertas do dia</span>
+<span>Alertas do dia</span>
 
-                    <div class="indicador amarelo-indicador"></div>
+<div class="indicador amarelo-indicador"></div>
 
-                </div>
+</div>
 
-                <h2>4</h2>
+<h2>4</h2>
 
-                <p>Ocorrências moderadas</p>
+<p>Ocorrências moderadas</p>
 
-            </div>
+</div>
 
-        </section>
+</section>
 
-        <section class="camaras-grid" id="cardsCamaras"></section>
+<section class="camaras-grid" id="cardsCamaras"></section>
 
-        <section class="monitoramento">
+<section class="monitoramento">
 
-            <div class="grafico-area">
+<div class="grafico-area">
 
-                <div class="grafico-header">
+<div class="grafico-header">
 
-                    <h3>Monitoramento da Câmara</h3>
+<h3>Monitoramento da Câmara</h3>
 
-                    <select>
-                        <option>Câmara 1</option>
-                        <option>Câmara 2</option>
-                        <option>Câmara 3</option>
-                        <option>Câmara 4</option>
-                        <option>Câmara 5</option>
-                    </select>
+<select>
+<option>Câmara 1</option>
+<option>Câmara 2</option>
+<option>Câmara 3</option>
+<option>Câmara 4</option>
+<option>Câmara 5</option>
+</select>
 
-                </div>
+</div>
 
-                <canvas id="graficoTemperatura"></canvas>
+<canvas id="graficoTemperatura"></canvas>
 
-            </div>
+</div>
 
-            <div class="painel-status">
+<div class="painel-status">
 
-                <h3>Status Operacional</h3>
+<h3>Status Operacional</h3>
 
-                <div class="status-box verde" id="statusOperacional">
-                    Entreposto operando normalmente
-                </div>
+<div class="status-box verde" id="statusOperacional">
+Entreposto operando normalmente
+</div>
 
-                <div class="info-status">
-                    <span>Último alerta</span>
-                    <strong>Câmara 4 acima da temperatura ideal</strong>
-                </div>
+<div class="info-status">
+<span>Último alerta</span>
+<strong>Câmara 4 acima da temperatura ideal</strong>
+</div>
 
-                <div class="info-status">
-                    <span>Sensores ativos</span>
-                    <strong>9 sensores online</strong>
-                </div>
+<div class="info-status">
+<span>Sensores ativos</span>
+<strong>9 sensores online</strong>
+</div>
 
-                <div class="info-status">
-                    <span>Última atualização</span>
-                    <strong id="ultimaAtualizacao"></strong>
-                </div>
+<div class="info-status">
+<span>Última atualização</span>
+<strong id="ultimaAtualizacao"></strong>
+</div>
 
-            </div>
+</div>
 
-        </section>
+</section>
 
-        <section class="estatisticas-alertas">
+<section class="estatisticas-alertas">
 
-            <div class="alertas">
+<div class="alertas">
 
-                <h3>Alertas Recentes</h3>
+<h3>Alertas Recentes</h3>
 
-                <div class="alerta-item critico">
-                    <span>08:31</span>
-                    <p>Câmara 2 acima do limite</p>
-                </div>
+<div class="alerta-item critico">
+<span>08:31</span>
+<p>Câmara 2 acima do limite</p>
+</div>
 
-                <div class="alerta-item alerta">
-                    <span>07:54</span>
-                    <p>Sensor 4 desconectado</p>
-                </div>
+<div class="alerta-item alerta">
+<span>07:54</span>
+<p>Sensor 4 desconectado</p>
+</div>
 
-                <div class="alerta-item estavel">
-                    <span>06:12</span>
-                    <p>Temperatura estabilizada</p>
-                </div>
+<div class="alerta-item estavel">
+<span>06:12</span>
+<p>Temperatura estabilizada</p>
+</div>
 
-            </div>
+</div>
 
-        </section>
+</section>
 
-    </main>
+</main>
 
 </div>
 
 <script>
 
-    var saudacaoElemento = saudacao
-    var horaAtualElemento = horaAtual
-    var ultimaAtualizacaoElemento = ultimaAtualizacao
-    var cardsCamarasElemento = cardsCamaras
-    var temperaturaTempoRealElemento = temperaturaTempoReal
-    var kpiTempoRealElemento = kpiTempoReal
-    var statusOperacionalElemento = statusOperacional
-    var graficoElemento = graficoTemperatura
+var saudacaoElemento = saudacao
+var horaAtualElemento = horaAtual
+var ultimaAtualizacaoElemento = ultimaAtualizacao
+var cardsCamarasElemento = cardsCamaras
+var temperaturaTempoRealElemento = temperaturaTempoReal
+var kpiTempoRealElemento = kpiTempoReal
+var statusOperacionalElemento = statusOperacional
+var graficoElemento = graficoTemperatura
 
-    var temperaturas = [16, 16, 15, 17, 16, 14, 16, 17, 15, 16]
+var temperaturas = [16, 16, 15, 17, 16, 14, 16, 17, 15, 16]
 
-    function atualizarHorario(){
+function atualizarHorario(){
 
-        var agora = new Date()
+var agora = new Date()
 
-        var hora = agora.getHours()
+var hora = agora.getHours()
 
-        var minuto = agora.getMinutes()
+var minuto = agora.getMinutes()
 
-        if(minuto < 10){
-            minuto = "0" + minuto
-        }
+if(minuto < 10){
+minuto = "0" + minuto
+}
 
-        var saudacaoTexto = ""
+var saudacaoTexto = ""
 
-        if(hora < 12){
+if(hora < 12){
 
-            saudacaoTexto = "Bom dia"
+saudacaoTexto = "Bom dia"
 
-        }else if(hora < 18){
+}else if(hora < 18){
 
-            saudacaoTexto = "Boa tarde"
+saudacaoTexto = "Boa tarde"
 
-        }else{
+}else{
 
-            saudacaoTexto = "Boa noite"
+saudacaoTexto = "Boa noite"
 
-        }
+}
 
-        saudacaoElemento.innerHTML = saudacaoTexto + ", gestor"
+saudacaoElemento.innerHTML = saudacaoTexto + ", gestor"
 
-        horaAtualElemento.innerHTML = hora + ":" + minuto
+horaAtualElemento.innerHTML = hora + ":" + minuto
 
-        ultimaAtualizacaoElemento.innerHTML = hora + ":" + minuto
+ultimaAtualizacaoElemento.innerHTML = hora + ":" + minuto
 
-    }
+}
 
-    atualizarHorario()
+atualizarHorario()
 
-    setInterval(atualizarHorario, 1000)
+setInterval(atualizarHorario, 1000)
 
-    function renderizarCamaras(){
+function renderizarCamaras(){
 
-        cardsCamarasElemento.innerHTML = ""
+cardsCamarasElemento.innerHTML = ""
 
-        for(var i = 0; i < temperaturas.length; i++){
+for(var i = 0; i < temperaturas.length; i++){
 
-            var temperatura = temperaturas[i]
+var temperatura = temperaturas[i]
 
-            var status = ""
-            var classe = ""
+var status = ""
+var classe = ""
 
-            if(temperatura < 13 || temperatura > 19){
+if(temperatura < 13 || temperatura > 19){
 
-                status = "Crítico"
-                classe = "critico"
+status = "Crítico"
+classe = "critico"
 
-            }else if(
-                (temperatura >= 13 && temperatura <= 14) ||
-                (temperatura >= 17 && temperatura <= 19)
-            ){
+}else if(
+(temperatura >= 13 && temperatura <= 14) ||
+(temperatura >= 17 && temperatura <= 19)
+){
 
-                status = "Atenção"
-                classe = "alerta"
+status = "Atenção"
+classe = "alerta"
 
-            }else{
+}else{
 
-                status = "Estável"
-                classe = "estavel"
+status = "Estável"
+classe = "estavel"
 
-            }
+}
 
-            cardsCamarasElemento.innerHTML += `
+cardsCamarasElemento.innerHTML += `
 
-                <div class="camara-card">
+               <div class="camara-card">
 
-                    <div>
+                   <div>
 
-                        <span>Câmara ${i + 1}</span>
+                       <span>Câmara ${i + 1}</span>
 
-                        <h2>${temperatura}°C</h2>
+                       <h2>${temperatura}°C</h2>
 
-                    </div>
+                   </div>
 
-                    <div class="badge ${classe}">
-                        ${status}
-                    </div>
+                   <div class="badge ${classe}">
+                       ${status}
+                   </div>
 
-                </div>
+               </div>
 
-            `
-        }
+           `
+}
 
-    }
+}
 
-    renderizarCamaras()
+renderizarCamaras()
 
-    var grafico = new Chart(graficoElemento, {
+var grafico = new Chart(graficoElemento, {
 
-        type: "line",
+type: "line",
 
-        data: {
+data: {
 
-            labels: ["08:00", "08:05", "08:10", "08:15", "08:20", "08:25", "08:30"],
+labels: ["08:00", "08:05", "08:10", "08:15", "08:20", "08:25", "08:30"],
 
-            datasets: [{
+datasets: [{
 
-                data: [15, 16, 16, 17, 16, 18, 16],
+data: [15, 16, 16, 17, 16, 18, 16],
 
-                borderColor: "#facc15",
+borderColor: "#facc15",
 
-                backgroundColor: "rgba(250,204,21,0.3)",
+backgroundColor: "rgba(250,204,21,0.3)",
 
-                borderWidth: 3,
+borderWidth: 3,
 
-                tension: 0.4,
+tension: 0.4,
 
-                fill: true
+fill: true
 
-            }]
+}]
 
-        },
+},
 
-        options: {
+options: {
 
-            responsive: true,
+responsive: true,
 
-            plugins: {
+plugins: {
 
-                legend: {
-                    display: false
-                }
+legend: {
+display: false
+}
 
-            },
+},
 
-            scales: {
+scales: {
 
-                x: {
+x: {
 
-                    ticks: {
-                        color: "#555"
-                    }
+ticks: {
+color: "#555"
+}
 
-                },
+},
 
-                y: {
+y: {
 
-                    ticks: {
-                        color: "#555"
-                    }
+ticks: {
+color: "#555"
+}
 
-                }
+}
 
-            }
+}
 
-        }
+}
 
-    })
+})
 
-    function atualizarTemperaturaArduino(valor){
+function atualizarTemperaturaArduino(valor){
 
-        temperaturaTempoRealElemento.innerHTML = valor + "°C"
+temperaturaTempoRealElemento.innerHTML = valor + "°C"
 
-        if(valor < 13 || valor > 19){
+if(valor < 13 || valor > 19){
 
-            kpiTempoRealElemento.className = "kpi destaque vermelho-kpi"
+kpiTempoRealElemento.className = "kpi destaque vermelho-kpi"
 
-            statusOperacionalElemento.className = "status-box vermelho"
+statusOperacionalElemento.className = "status-box vermelho"
 
-            statusOperacionalElemento.innerHTML = "Temperatura crítica detectada"
+statusOperacionalElemento.innerHTML = "Temperatura crítica detectada"
 
-        }else if(
-            (valor >= 13 && valor <= 14) ||
-            (valor >= 17 && valor <= 19)
-        ){
+}else if(
+(valor >= 13 && valor <= 14) ||
+(valor >= 17 && valor <= 19)
+){
 
-            kpiTempoRealElemento.className = "kpi destaque amarelo-kpi"
+kpiTempoRealElemento.className = "kpi destaque amarelo-kpi"
 
-            statusOperacionalElemento.className = "status-box amarelo"
+statusOperacionalElemento.className = "status-box amarelo"
 
-            statusOperacionalElemento.innerHTML = "Temperatura em atenção"
+statusOperacionalElemento.innerHTML = "Temperatura em atenção"
 
-        }else{
+}else{
 
-            kpiTempoRealElemento.className = "kpi destaque verde-kpi"
+kpiTempoRealElemento.className = "kpi destaque verde-kpi"
 
-            statusOperacionalElemento.className = "status-box verde"
+statusOperacionalElemento.className = "status-box verde"
 
-            statusOperacionalElemento.innerHTML = "Entreposto operando normalmente"
+statusOperacionalElemento.innerHTML = "Entreposto operando normalmente"
 
-        }
+}
 
-    }
+}
 
-    setInterval(function(){
+setInterval(function(){
 
-        var temperaturaMock = (Math.random() * (22 - 14) + 14).toFixed(1)
+var temperaturaMock = (Math.random() * (22 - 14) + 14).toFixed(1)
 
-        atualizarTemperaturaArduino(temperaturaMock)
+atualizarTemperaturaArduino(temperaturaMock)
 
-    }, 3000)
+}, 3000)
 
 </script>
 
 </body>
 </html>
-<!-- DASHBOARD ATUALIZADA -->
+</html>
