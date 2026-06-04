@@ -111,6 +111,12 @@ const fetchSuporte = () => {
     body: JSON.stringify({
       pergunta: texto
     })
+  }).then((res) => {
+    if (res.ok) {
+      adicionarMensage(res, 'ia')
+    } else {
+      adicionarMensage('Falha na conexao com BobIa...', 'ia')
+    }
   })
 }
 
