@@ -4,23 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/sessao.js"></script>
     <title>BananaAPI - Cadastro de Entreposto</title>
   </head>
   <body>
-    <div class="header">
-      <div class="container">
-        <a href="home.html">
-          <h1 class="titulo">BananaAPI</h1>
-        </a>
-        <ul class="navbar">
-          <li><span><a href="home.html">Inicial</a></span></li>
-          <li>|</li>
-          <li><span><a href="calculadora.html">Financeiro</a></span></li>
-          <li>|</li>
-          <li><span><a href="">Monitoramento</a></span></li>
-        </ul>
-      </div>
-    </div>
+    <div id="header" class="header"></div>
+
 
     <div class="login">
       <div class="container">
@@ -66,6 +55,9 @@
 
     <script src="js/fetch.js"></script>
     <script>
+      window.onload = () => {
+        headerSessao()
+      }
       function validarEntreposto() {
         let isValido = true;
 

@@ -5,28 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>📐 Calculadora BANANAPI</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/sessao.js"></script>
   </head>
   <body>
-    <div class="header-calc">
-      <div class="container">
-        <a href="home.html">
-          <h1 class="titulo">BananaAPI</h1>
-        </a>
-        <ul class="navbar">
-          <li>
-            <span><a href="home.html">Inicial</a></span>
-          </li>
-          <li>|</li>
-          <li>
-            <span><a href="#">Financeiro</a></span>
-          </li>
-          <li>|</li>
-          <li class="">
-            <span><a href="auth.html">Cadastro</a></span>
-          </li>
-        </ul>
-      </div>
-    </div>
+<div class="header" id="header"></div>
+
     <h1 style="margin-top: 40px">Calculadora Financeira</h1>
     <h2>Controle sobre maturação das bananas</h2>
     <div class="container-calc">
@@ -52,6 +35,10 @@
   </body>
 </html>
 <script>
+  window.onload = () => {
+    headerSessao()
+  }
+
   let simulacao = 1;
 
   function reiniciar() {

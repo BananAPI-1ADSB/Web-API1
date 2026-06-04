@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="./js/fetch.js"></script>
+    <script src="js/sessao.js"></script>
     <title>BananaAPI - Autenticação</title>
     <style>
       .form-hidden {
@@ -13,26 +14,7 @@
     </style>
   </head>
   <body>
-    <div class="header">
-      <div class="container">
-        <a href="home.html">
-          <h1 class="titulo">BananaAPI</h1>
-        </a>
-        <ul class="navbar">
-          <li>
-            <span><a href="home.html">Inicial</a></span>
-          </li>
-          <li>|</li>
-          <li>
-            <span><a href="calculadora.html">Financeiro</a></span>
-          </li>
-          <li>|</li>
-          <li>
-            <span><a href="">Monitoramento</a></span>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <div class="header" id="header"></div>
 
     <div class="login">
       <div class="container">
@@ -108,49 +90,19 @@
               </button>
               <p class="login-link">
                 Já possui conta?
-                <a href="javascript:alternarForm()">Faça login aqui</a>
+                <a href="login.html">Faça login aqui</a>
               </p>
             </div>
           </div>
 
-          <!-- LOGIN -->
-          <div id="form_login" class="form-hidden">
-            <h2>Bem-vindo!</h2>
-            <div class="formulario">
-              <div class="campo">
-                <label for="email_login">E-mail:</label>
-                <input
-                  id="email_login"
-                  type="email"
-                  placeholder="meuemail@provedor.com"
-                  oninput="limparErro('email_login')"
-                />
-                <span class="erro" id="erro_email_login"></span>
-              </div>
-              <div class="campo">
-                <label for="senha_login">Senha:</label>
-                <input
-                  id="senha_login"
-                  type="password"
-                  placeholder="••••••"
-                  oninput="limparErro('senha_login')"
-                />
-                <span class="erro" id="erro_senha_login"></span>
-              </div>
-              <button type="button" class="botao" onclick="validarLogin()">
-                Fazer Login
-              </button>
-              <p class="login-link">
-                Não possui conta?
-                <a href="javascript:alternarForm()">Cadastre-se aqui</a>
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
     <script>
+      window.onload = () => {
+        headerSessao()
+      }
       let usuarioRegistrado = null;
 
       function alternarForm() {
@@ -270,40 +222,6 @@
         }
       }
 
-      function validarLogin() {
-        let isValido = true;
-
-        // Validar email
-        if (email_login.value.trim() === "") {
-          erro_email_login.textContent = "E-mail é obrigatório";
-          email_login.classList.add("input-erro");
-          isValido = false;
-        } else if (
-          !email_login.value.includes("@") ||
-          !email_login.value.includes(".")
-        ) {
-          erro_email_login.textContent = "E-mail inválido";
-          email_login.classList.add("input-erro");
-          isValido = false;
-        } else {
-          erro_email_login.textContent = "";
-          email_login.classList.remove("input-erro");
-        }
-
-        // Validar senha
-        if (senha_login.value === "") {
-          erro_senha_login.textContent = "Senha é obrigatória";
-          senha_login.classList.add("input-erro");
-          isValido = false;
-        } else {
-          erro_senha_login.textContent = "";
-          senha_login.classList.remove("input-erro");
-        }
-
-        if (isValido) {
-          fetchAutenticarUsuario();
-        }
-      }
     </script>
   </body>
 </html>
