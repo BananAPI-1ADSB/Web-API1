@@ -15,7 +15,7 @@ const fetchAutenticarUsuario = () => {
         sessionStorage.SENHA_USUARIO = json.senha;
 
         alert("Login realizado com sucesso!");
-        window.location.href = "cadastro-empresa.html";
+        window.location.href = "/";
       });
     } else {
       alert("Erro ao autenticar usuario!");
@@ -104,14 +104,22 @@ const fetchCadastarEndereco = () => {
   })
 };
 
-
+const fetchSuporte = () => {
+  fetch("http://localhost:8080/bobia/perguntar", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      pergunta: texto
+    })
+  })
+}
 
 const fetchLeitura = () => {
   fetch("http://localhost:8080/leituras/listar", {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
-      fkSensor: fkSensor_alguma_coisa.value,
+      fkSensor: 1,
     }),
   });
 };
