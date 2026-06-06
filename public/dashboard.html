@@ -454,15 +454,7 @@ ONLINE
 
 </div>
 
-<div class="kpi verde-kpi">
 
-<div class="kpi-topo">
-
-
-</div>
-
-
-</div>
 
 </section>
 
@@ -525,7 +517,15 @@ var kpiTempoRealElemento = kpiTempoReal
 var statusOperacionalElemento = statusOperacional
 var graficoElemento = graficoTemperatura
 
-var temperaturas = [16, 16, 15, 17, 16, 14, 16, 17, 15, 16]
+function gerarTemperatura() {
+    return Math.floor(Math.random() * (30 - 10 + 1)) + 10;
+}
+
+var temperaturas = [];
+
+for (var i = 0; i < 10; i++) {
+    temperaturas.push(gerarTemperatura());
+}
 
 function atualizarHorario(){
     
@@ -580,23 +580,23 @@ function renderizarCamaras(){
         var status = ""
         var classe = ""
         
-        if(temperatura < 13 || temperatura > 19){
-            
-            status = "Crítico"
-            classe = "critico"
-            
+       if(temperatura < 13 || temperatura > 26){
+
+    status = "Crítico";
+    classe = "critico";
+
 }else if(
 (temperatura >= 13 && temperatura <= 14) ||
-(temperatura >= 17 && temperatura <= 19)
+(temperatura >= 25 && temperatura <= 26)
 ){
 
-status = "Atenção"
-classe = "alerta"
+    status = "Atenção";
+    classe = "alerta";
 
 }else{
 
-    status = "Estável"
-classe = "estavel"
+    status = "Estável";
+    classe = "estavel";
 
 }
 
@@ -623,7 +623,19 @@ cardsCamarasElemento.innerHTML += `
 
 }
 
-renderizarCamaras()
+function atualizarCamarasDinamicas() {
+
+    temperaturas = [];
+
+    for (var i = 0; i < 10; i++) {
+        temperaturas.push(gerarTemperatura());
+    }
+
+    renderizarCamaras();
+}
+
+renderizarCamaras();
+setInterval(atualizarCamarasDinamicas, 2000);
 
 var grafico = new Chart(graficoElemento, {
 
@@ -691,33 +703,33 @@ function atualizarTemperaturaArduino(valor){
     
     temperaturaTempoRealElemento.innerHTML = valor + "°C"
     
-    if(valor < 13 || valor > 19){
-        
-kpiTempoRealElemento.className = "kpi destaque vermelho-kpi"
+  if(valor < 13 || valor > 26){
 
-statusOperacionalElemento.className = "status-box vermelho"
+    kpiTempoRealElemento.className = "kpi destaque vermelho-kpi";
 
-statusOperacionalElemento.innerHTML = "Temperatura crítica detectada"
+    statusOperacionalElemento.className = "status-box vermelho";
+
+    statusOperacionalElemento.innerHTML = "Temperatura crítica detectada";
 
 }else if(
-    (valor >= 13 && valor <= 14) ||
-    (valor >= 17 && valor <= 19)
+(valor >= 13 && valor <= 14) ||
+(valor >= 25 && valor <= 26)
 ){
 
-    kpiTempoRealElemento.className = "kpi destaque amarelo-kpi"
-    
-    statusOperacionalElemento.className = "status-box amarelo"
-    
-    statusOperacionalElemento.innerHTML = "Temperatura em atenção"
+    kpiTempoRealElemento.className = "kpi destaque amarelo-kpi";
+
+    statusOperacionalElemento.className = "status-box amarelo";
+
+    statusOperacionalElemento.innerHTML = "Temperatura em atenção";
 
 }else{
-    
-    kpiTempoRealElemento.className = "kpi destaque verde-kpi"
-    
-    statusOperacionalElemento.className = "status-box verde"
-    
-    statusOperacionalElemento.innerHTML = "Entreposto operando normalmente"
-    
+
+    kpiTempoRealElemento.className = "kpi destaque verde-kpi";
+
+    statusOperacionalElemento.className = "status-box verde";
+
+    statusOperacionalElemento.innerHTML = "Entreposto operando normalmente";
+
 }
 
 }
