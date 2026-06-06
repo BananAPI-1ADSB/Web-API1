@@ -30,7 +30,7 @@ const fetchCadastrarUsuario = () => {
     body: JSON.stringify({
       nome: nome_cadastro.value,
       email: email_cadastro.value,
-      fkEmpresa: Number(empresa_cadastro),
+      fkEmpresa: Number(empresa_cadastro.value),
       telefone: telefone_cadastro.value,
       senha: senha_cadastro.value,
     }),
@@ -67,7 +67,7 @@ const fetchCadastrarUsuario = () => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         nome: nome_entreposto.value,
-        fkEmpresa: Number(fk_empresa).value,
+        fkEmpresa: Number(fk_empresa.value),
       }),
     }).then((res) => {
       if(res.ok) {
