@@ -30,20 +30,20 @@ const fetchCadastrarUsuario = () => {
     body: JSON.stringify({
       nome: nome_cadastro.value,
       email: email_cadastro.value,
-      empresa: empresa_cadastro.value,
+      fkEmpresa: Number(empresa_cadastro),
       telefone: telefone_cadastro.value,
       senha: senha_cadastro.value,
     }),
   }).then((res) => {
-      if (res.ok) {
-        window.location.href = "cadastro-empresa.html"
-        alert("Conta criada com sucesso!");
-      } else {
-        alert("Erro ao efetuar cadastro!");
+    if (res.ok) {
+      window.location.href = "login.html"
+      alert("Conta criada com sucesso!");
+    } else {
+        alert("Erro ao efetuar cadastro!a");
       }
     });
   }
-  const fetchCadastarEmpresa = () => {
+  const fetchCadastrarEmpresa = () => {
     fetch("http://localhost:8080/empresas/cadastrar", {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -61,13 +61,13 @@ const fetchCadastrarUsuario = () => {
     })
   };
 
-  const fetchCadastarEntreposto = () => {
+  const fetchCadastrarEntreposto = () => {
     fetch("http://localhost:8080/entrepostos/cadastrar", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         nome: nome_entreposto.value,
-        cnpj: fk_empresa.value,
+        fkEmpresa: Number(fk_empresa).value,
       }),
     }).then((res) => {
       if(res.ok) {
@@ -79,7 +79,7 @@ const fetchCadastrarUsuario = () => {
     })
   };
 
-const fetchCadastarEndereco = () => {
+const fetchCadastrarEndereco = () => {
   fetch("http://localhost:8080/enderecos/cadastrar", {
     method: "POST",
     headers: { "Content-type": "application/json" },
@@ -91,8 +91,8 @@ const fetchCadastarEndereco = () => {
       cidade: cidade_endereco.value,
       complemento: complemento_endereco.value,
       siglaEstado: estado_endereco.value,
-      fkEmpresa: fk_empresa_end.value,
-      fkEntreposto: fk_entreposto_end.value,
+      fkEmpresa: Number(fk_empresa_end.value),
+      fkEntreposto: Number(fk_entreposto_end.value),
     }),
   }).then((res) => {
     if(res.ok) {
@@ -105,7 +105,7 @@ const fetchCadastarEndereco = () => {
 };
 
 const fetchSuporte = () => {
-  fetch("http://localhost:8080/bobia/perguntar", {
+  return fetch("http://localhost:8080/bobia/perguntar", {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
@@ -113,7 +113,9 @@ const fetchSuporte = () => {
     })
   }).then((res) => {
     if (res.ok) {
-      adicionarMensage(res, 'ia')
+      res.json().then((res) => {
+        adicionarMensage(res, 'ia')
+      })
     } else {
       adicionarMensage('Falha na conexao com BobIa...', 'ia')
     }
@@ -121,11 +123,14 @@ const fetchSuporte = () => {
 }
 
 const fetchLeitura = () => {
-  fetch("http://localhost:8080/leituras/listar", {
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify({
-      fkSensor: 1,
-    }),
-  });
-};
+  return fetch("http://localhost:8080/leituras/listar", {
+    method: "GET",
+    headers: { "Content-type": "application/json" }
+  }).then((res) => {
+    if (res.ok) {
+        return res.json()
+      }
+    })
+  }
+
+

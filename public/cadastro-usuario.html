@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <script src="./js/fetch.js"></script>
     <script src="js/sessao.js"></script>
+    <script src="js/limparErro.js"></script>
     <title>BananaAPI - Autenticação</title>
     <style>
       .form-hidden {
@@ -44,11 +45,11 @@
                 <span class="erro" id="erro_email_cadastro"></span>
               </div>
               <div class="campo">
-                <label for="empresa_cadastro">Empresa:</label>
+                <label for="empresa_cadastro">ID da Empresa:</label>
                 <input
                   id="empresa_cadastro"
                   type="text"
-                  placeholder="Nome da sua empresa"
+                  placeholder="informe o ID da sua empresa"
                   oninput="limparErro('empresa_cadastro')"
                 />
                 <span class="erro" id="erro_empresa_cadastro"></span>
@@ -89,8 +90,12 @@
                 Criar Conta
               </button>
               <p class="login-link">
+                Não possui codigo da empresa?
+                <a href="cadastro-empresa.html">Cadastre sua empresa!</a>
+              </p>
+              <p class="login-link">
                 Já possui conta?
-                <a href="login.html">Faça login aqui</a>
+                <a href="login.html">Faça login aqui!</a>
               </p>
             </div>
           </div>
@@ -126,20 +131,24 @@
         // Validar nome
         if (nome_cadastro.value.trim() === "") {
           erro_nome_cadastro.innerHTML = "Nome é obrigatório";
+          erro_nome_cadastro.innerHTML = "Nome é obrigatório";
           nome_cadastro.classList.add("input-erro");
           isValido = false;
         } else if (nome_cadastro.value.trim().length < 3) {
+          erro_nome_cadastro.innerHTML =
           erro_nome_cadastro.innerHTML =
             "Nome deve ter pelo menos 3 caracteres";
           nome_cadastro.classList.add("input-erro");
           isValido = false;
         } else {
           erro_nome_cadastro.innerHTML = "";
+          erro_nome_cadastro.innerHTML = "";
           nome_cadastro.classList.remove("input-erro");
         }
 
         // Validar email
         if (email_cadastro.value.trim() === "") {
+          erro_email_cadastro.innerHTML = "E-mail é obrigatório";
           erro_email_cadastro.innerHTML = "E-mail é obrigatório";
           email_cadastro.classList.add("input-erro");
           isValido = false;
@@ -148,9 +157,11 @@
           !email_cadastro.value.includes(".")
         ) {
           erro_email_cadastro.innerHTML = "E-mail inválido";
+          erro_email_cadastro.innerHTML = "E-mail inválido";
           email_cadastro.classList.add("input-erro");
           isValido = false;
         } else {
+          erro_email_cadastro.innerHTML = "";
           erro_email_cadastro.innerHTML = "";
           email_cadastro.classList.remove("input-erro");
         }
@@ -158,9 +169,11 @@
         // Validar empresa
         if (empresa_cadastro.value.trim() === "") {
           erro_empresa_cadastro.innerHTML = "Empresa é obrigatória";
+          erro_empresa_cadastro.innerHTML = "Empresa é obrigatória";
           empresa_cadastro.classList.add("input-erro");
           isValido = false;
         } else {
+          erro_empresa_cadastro.innerHTML = "";
           erro_empresa_cadastro.innerHTML = "";
           empresa_cadastro.classList.remove("input-erro");
         }
@@ -168,13 +181,16 @@
         // Validar telefone
         if (telefone_cadastro.value.trim() === "") {
           erro_telefone_cadastro.innerHTML = "Telefone é obrigatório";
+          erro_telefone_cadastro.innerHTML = "Telefone é obrigatório";
           telefone_cadastro.classList.add("input-erro");
           isValido = false;
         } else if (telefone_cadastro.value.trim().length < 10) {
           erro_telefone_cadastro.innerHTML = "Telefone inválido";
+          erro_telefone_cadastro.innerHTML = "Telefone inválido";
           telefone_cadastro.classList.add("input-erro");
           isValido = false;
         } else {
+          erro_telefone_cadastro.innerHTML = "";
           erro_telefone_cadastro.innerHTML = "";
           telefone_cadastro.classList.remove("input-erro");
         }
@@ -182,14 +198,17 @@
         // Validar senha
         if (senha_cadastro.value === "") {
           erro_senha_cadastro.innerHTML = "Senha é obrigatória";
+          erro_senha_cadastro.innerHTML = "Senha é obrigatória";
           senha_cadastro.classList.add("input-erro");
           isValido = false;
         } else if (senha_cadastro.value.length < 6) {
+          erro_senha_cadastro.innerHTML =
           erro_senha_cadastro.innerHTML =
             "Senha deve ter pelo menos 6 caracteres";
           senha_cadastro.classList.add("input-erro");
           isValido = false;
         } else {
+          erro_senha_cadastro.innerHTML = "";
           erro_senha_cadastro.innerHTML = "";
           senha_cadastro.classList.remove("input-erro");
         }
@@ -197,14 +216,17 @@
         // Validar confirmação de senha
         if (confirmacao_senha_cadastro.value === "") {
           erro_confirmacao_cadastro.innerHTML =
+          erro_confirmacao_cadastro.innerHTML =
             "Confirmação de senha é obrigatória";
           confirmacao_senha_cadastro.classList.add("input-erro");
           isValido = false;
         } else if (confirmacao_senha_cadastro.value !== senha_cadastro.value) {
           erro_confirmacao_cadastro.innerHTML = "As senhas não conferem";
+          erro_confirmacao_cadastro.innerHTML = "As senhas não conferem";
           confirmacao_senha_cadastro.classList.add("input-erro");
           isValido = false;
         } else {
+          erro_confirmacao_cadastro.innerHTML = "";
           erro_confirmacao_cadastro.innerHTML = "";
           confirmacao_senha_cadastro.classList.remove("input-erro");
         }

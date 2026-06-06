@@ -7,6 +7,7 @@
 <title>Dashboard BANANAPI</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/fetch.js"></script>
 
 <style>
 
@@ -571,6 +572,8 @@ Entreposto operando normalmente
 </div>
 
 <script>
+let leituras = [];    
+let labels = [];    
 
 var saudacaoElemento = saudacao
 var horaAtualElemento = horaAtual
@@ -584,8 +587,8 @@ var graficoElemento = graficoTemperatura
 var temperaturas = [16, 16, 15, 17, 16, 14, 16, 17, 15, 16]
 
 function atualizarHorario(){
-
-var agora = new Date()
+    
+    var agora = new Date()
 
 var hora = agora.getHours()
 
@@ -597,21 +600,23 @@ minuto = "0" + minuto
 
 var saudacaoTexto = ""
 
+var nome = sessionStorage.NOME_USUARIO;
+
 if(hora < 12){
 
-saudacaoTexto = "Bom dia"
-
+    saudacaoTexto = "Bom dia"
+    
 }else if(hora < 18){
-
-saudacaoTexto = "Boa tarde"
-
+    
+    saudacaoTexto = "Boa tarde"
+    
 }else{
-
+    
 saudacaoTexto = "Boa noite"
 
 }
 
-saudacaoElemento.innerHTML = saudacaoTexto + ", gestor"
+saudacaoElemento.innerHTML = saudacaoTexto + ", " + nome
 
 horaAtualElemento.innerHTML = hora + ":" + minuto
 
@@ -624,21 +629,21 @@ atualizarHorario()
 setInterval(atualizarHorario, 1000)
 
 function renderizarCamaras(){
+    
+    cardsCamarasElemento.innerHTML = ""
+    
+    for(var i = 0; i < temperaturas.length; i++){
 
-cardsCamarasElemento.innerHTML = ""
-
-for(var i = 0; i < temperaturas.length; i++){
-
-var temperatura = temperaturas[i]
-
-var status = ""
-var classe = ""
-
-if(temperatura < 13 || temperatura > 19){
-
-status = "Crítico"
-classe = "critico"
-
+        var temperatura = temperaturas[i]
+        
+        var status = ""
+        var classe = ""
+        
+        if(temperatura < 13 || temperatura > 19){
+            
+            status = "Crítico"
+            classe = "critico"
+            
 }else if(
 (temperatura >= 13 && temperatura <= 14) ||
 (temperatura >= 17 && temperatura <= 19)
@@ -649,29 +654,29 @@ classe = "alerta"
 
 }else{
 
-status = "Estável"
+    status = "Estável"
 classe = "estavel"
 
 }
 
 cardsCamarasElemento.innerHTML += `
 
-               <div class="camara-card">
-
-                   <div>
-
-                       <span>Câmara ${i + 1}</span>
-
+<div class="camara-card">
+    
+    <div>
+        
+        <span>Câmara ${i + 1}</span>
+        
                        <h2>${temperatura}°C</h2>
-
+                       
                    </div>
 
                    <div class="badge ${classe}">
-                       ${status}
+                    ${status}
                    </div>
-
-               </div>
-
+                   
+                   </div>
+                   
            `
 }
 
@@ -684,32 +689,32 @@ var grafico = new Chart(graficoElemento, {
 type: "line",
 
 data: {
-
-labels: ["08:00", "08:05", "08:10", "08:15", "08:20", "08:25", "08:30"],
+    
+labels: labels,
 
 datasets: [{
+    
+    data: leituras,
+    
+    borderColor: "#facc15",
 
-data: [15, 16, 16, 17, 16, 18, 16],
+    backgroundColor: "rgba(250,204,21,0.3)",
 
-borderColor: "#facc15",
+    borderWidth: 3,
+    
+    tension: 0.4,
 
-backgroundColor: "rgba(250,204,21,0.3)",
-
-borderWidth: 3,
-
-tension: 0.4,
-
-fill: true
-
+    fill: true
+    
 }]
 
 },
 
 options: {
 
-responsive: true,
-
-plugins: {
+    responsive: true,
+    
+    plugins: {
 
 legend: {
 display: false
@@ -722,7 +727,7 @@ scales: {
 x: {
 
 ticks: {
-color: "#555"
+    color: "#555"
 }
 
 },
@@ -742,11 +747,11 @@ color: "#555"
 })
 
 function atualizarTemperaturaArduino(valor){
-
-temperaturaTempoRealElemento.innerHTML = valor + "°C"
-
-if(valor < 13 || valor > 19){
-
+    
+    temperaturaTempoRealElemento.innerHTML = valor + "°C"
+    
+    if(valor < 13 || valor > 19){
+        
 kpiTempoRealElemento.className = "kpi destaque vermelho-kpi"
 
 statusOperacionalElemento.className = "status-box vermelho"
@@ -754,36 +759,73 @@ statusOperacionalElemento.className = "status-box vermelho"
 statusOperacionalElemento.innerHTML = "Temperatura crítica detectada"
 
 }else if(
-(valor >= 13 && valor <= 14) ||
-(valor >= 17 && valor <= 19)
+    (valor >= 13 && valor <= 14) ||
+    (valor >= 17 && valor <= 19)
 ){
 
-kpiTempoRealElemento.className = "kpi destaque amarelo-kpi"
-
-statusOperacionalElemento.className = "status-box amarelo"
-
-statusOperacionalElemento.innerHTML = "Temperatura em atenção"
+    kpiTempoRealElemento.className = "kpi destaque amarelo-kpi"
+    
+    statusOperacionalElemento.className = "status-box amarelo"
+    
+    statusOperacionalElemento.innerHTML = "Temperatura em atenção"
 
 }else{
-
-kpiTempoRealElemento.className = "kpi destaque verde-kpi"
-
-statusOperacionalElemento.className = "status-box verde"
-
-statusOperacionalElemento.innerHTML = "Entreposto operando normalmente"
-
+    
+    kpiTempoRealElemento.className = "kpi destaque verde-kpi"
+    
+    statusOperacionalElemento.className = "status-box verde"
+    
+    statusOperacionalElemento.innerHTML = "Entreposto operando normalmente"
+    
 }
 
 }
 
-setInterval(function(){
+// setInterval(function(){
+    
+// var temperaturaMock = (Math.random() * (22 - 14) + 14).toFixed(1)
 
-var temperaturaMock = (Math.random() * (22 - 14) + 14).toFixed(1)
+// atualizarTemperaturaArduino(temperaturaMock)
 
-atualizarTemperaturaArduino(temperaturaMock)
+// }, 3000)
 
-}, 3000)
+async function atualizarLeitura() {
+    try {
+        const res = await fetchLeitura();
+        
+        if (res && res.length > 0) {
+            const ultimaLeitura = res[res.length - 1];
+            const valorTemperatura = parseFloat(ultimaLeitura.temperatura);
+            let valorHora = ultimaLeitura.dataHora
+            valorHora = valorHora.split('T')[1].slice(0, -5)
 
+            if (leituras.length < 7) {
+                leituras.push(valorTemperatura);
+                labels.push(valorHora)
+            } else {
+                for (let i = 0; i < leituras.length - 1; i++) {
+                    leituras[i] = leituras[i + 1];
+                }
+                leituras[leituras.length - 1] = valorTemperatura;
+            }
+            
+            if (grafico && grafico.data && grafico.data.datasets && grafico.data.datasets.length > 0) {
+                grafico.data.datasets[0].data = leituras;
+                
+                grafico.update();
+            }
+            
+            atualizarTemperaturaArduino(valorTemperatura);
+            
+        } else {
+            console.warn("A API respondeu, mas a lista de dados veio vazia.");
+        }
+    } catch (err) {
+        console.error('Erro no processamento dos dados:', err);
+    }
+}
+
+setInterval(atualizarLeitura, 2000);
 </script>
 
 </body>
