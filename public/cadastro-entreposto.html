@@ -62,20 +62,20 @@
         let isValido = true;
 
         if (nome_entreposto.value.trim() === "") {
-          erro_nome_entreposto.textContent = "Nome é obrigatório";
+          erro_nome_entreposto.innerHTML = "Nome é obrigatório";
           nome_entreposto.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_nome_entreposto.textContent = "";
+          erro_nome_entreposto.innerHTML = "";
           nome_entreposto.classList.remove("input-erro");
         }
 
         if (fk_empresa.value.trim() === "") {
-          erro_fk_empresa.textContent = "ID da empresa é obrigatório";
+          erro_fk_empresa.innerHTML = "ID da empresa é obrigatório";
           fk_empresa.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_fk_empresa.textContent = "";
+          erro_fk_empresa.innerHTML = "";
           fk_empresa.classList.remove("input-erro");
         }
 

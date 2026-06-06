@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/sessao.js"></script>
+    <title>BananaAPI - Cadastro de Sensor</title>
+  </head>
+  <body>
+    <div id="header" class="header"></div>
+
+    <div class="login">
+      <div class="container">
+        <div class="card card-cadastro">
+          <h2>Cadastro de Sensor</h2>
+          <div class="formulario">
+
+            <div class="campo">
+              <label for="modelo_sensor">Modelo do Sensor:</label>
+              <input
+                id="modelo_sensor"
+                type="text"
+                placeholder="Ex: DHT22, DS18B20"
+                oninput="limparErro('modelo_sensor')"
+              />
+              <span class="erro" id="erro_modelo_sensor"></span>
+            </div>
+
+            <div class="campo">
+              <label for="status_sensor">Status:</label>
+              <input
+                id="status_sensor"
+                type="text"
+                placeholder="Ex: ativo, inativo, manutenção"
+                oninput="limparErro('status_sensor')"
+              />
+              <span class="erro" id="erro_status_sensor"></span>
+            </div>
+
+            <div class="campo">
+              <label for="ponto_referencia">Ponto de Referência:</label>
+              <input
+                id="ponto_referencia"
+                type="text"
+                placeholder="Ex: Corredor A - Prateleira 2"
+                oninput="limparErro('ponto_referencia')"
+              />
+              <span class="erro" id="erro_ponto_referencia"></span>
+            </div>
+
+            <div class="campo">
+              <label for="fk_camera">ID da Câmera:</label>
+              <input
+                id="fk_camera"
+                type="number"
+                placeholder="Informe o ID da câmera vinculada"
+                oninput="limparErro('fk_camera')"
+              />
+              <span class="erro" id="erro_fk_camera"></span>
+            </div>
+
+            <button type="button" class="botao" onclick="validarSensor()">
+              Cadastrar Sensor
+            </button>
+
+            <p class="login-link">
+              Quer cadastrar uma câmera?
+              <a href="cadastro-camera.html">Cadastre aqui</a>
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/fetch.js"></script>
+    <script>
+      window.onload = () => {
+        headerSessao()
+      }
+      function validarSensor() {
+        let isValido = true;
+
+        if (modelo_sensor.value.trim() === "") {
+          erro_modelo_sensor.innerHTML = "Modelo é obrigatório";
+          modelo_sensor.classList.add("input-erro");
+          isValido = false;
+        } else {
+          erro_modelo_sensor.innerHTML = "";
+          modelo_sensor.classList.remove("input-erro");
+        }
+
+        if (status_sensor.value.trim() === "") {
+          erro_status_sensor.innerHTML = "Status é obrigatório";
+          status_sensor.classList.add("input-erro");
+          isValido = false;
+        } else {
+          erro_status_sensor.innerHTML = "";
+          status_sensor.classList.remove("input-erro");
+        }
+
+        if (ponto_referencia.value.trim() === "") {
+          erro_ponto_referencia.innerHTML = "Ponto de referência é obrigatório";
+          ponto_referencia.classList.add("input-erro");
+          isValido = false;
+        } else {
+          erro_ponto_referencia.innerHTML = "";
+          ponto_referencia.classList.remove("input-erro");
+        }
+
+        if (fk_camera.value.trim() === "") {
+          erro_fk_camera.innerHTML = "ID da câmera é obrigatório";
+          fk_camera.classList.add("input-erro");
+          isValido = false;
+        } else {
+          erro_fk_camera.innerHTML = "";
+          fk_camera.classList.remove("input-erro");
+        }
+
+        if (isValido) {
+          fetchCadastrarSensor();
+        }
+      }
+    </script>
+  </body>
+</html>

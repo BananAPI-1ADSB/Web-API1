@@ -137,68 +137,68 @@
         let isValido = true;
 
         if (cep_endereco.value.trim() === "") {
-          erro_cep_endereco.textContent = "CEP é obrigatório";
+          erro_cep_endereco.innerHTML = "CEP é obrigatório";
           cep_endereco.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_cep_endereco.textContent = "";
+          erro_cep_endereco.innerHTML = "";
           cep_endereco.classList.remove("input-erro");
         }
 
         if (rua_endereco.value.trim() === "") {
-          erro_rua_endereco.textContent = "Rua é obrigatória";
+          erro_rua_endereco.innerHTML = "Rua é obrigatória";
           rua_endereco.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_rua_endereco.textContent = "";
+          erro_rua_endereco.innerHTML = "";
           rua_endereco.classList.remove("input-erro");
         }
 
         if (numero_endereco.value.trim() === "") {
-          erro_numero_endereco.textContent = "Número é obrigatório";
+          erro_numero_endereco.innerHTML = "Número é obrigatório";
           numero_endereco.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_numero_endereco.textContent = "";
+          erro_numero_endereco.innerHTML = "";
           numero_endereco.classList.remove("input-erro");
         }
 
         if (bairro_endereco.value.trim() === "") {
-          erro_bairro_endereco.textContent = "Bairro é obrigatório";
+          erro_bairro_endereco.innerHTML = "Bairro é obrigatório";
           bairro_endereco.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_bairro_endereco.textContent = "";
+          erro_bairro_endereco.innerHTML = "";
           bairro_endereco.classList.remove("input-erro");
         }
 
         if (cidade_endereco.value.trim() === "") {
-          erro_cidade_endereco.textContent = "Cidade é obrigatória";
+          erro_cidade_endereco.innerHTML = "Cidade é obrigatória";
           cidade_endereco.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_cidade_endereco.textContent = "";
+          erro_cidade_endereco.innerHTML = "";
           cidade_endereco.classList.remove("input-erro");
         }
 
         if (estado_endereco.value.trim() === "") {
-          erro_estado_endereco.textContent = "Estado é obrigatório";
+          erro_estado_endereco.innerHTML = "Estado é obrigatório";
           estado_endereco.classList.add("input-erro");
           isValido = false;
         } else if (estado_endereco.value.trim().length < 2) {
-          erro_estado_endereco.textContent = "Informe a sigla com 2 letras";
+          erro_estado_endereco.innerHTML = "Informe a sigla com 2 letras";
           estado_endereco.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_estado_endereco.textContent = "";
+          erro_estado_endereco.innerHTML = "";
           estado_endereco.classList.remove("input-erro");
         }
 
         if (fk_empresa_end.value.trim() === "" && fk_entreposto_end.value.trim() === "") {
-          erro_fk_vinculo.textContent = "Informe ao menos o ID de uma empresa ou entreposto";
+          erro_fk_vinculo.innerHTML = "Informe ao menos o ID de uma empresa ou entreposto";
           isValido = false;
         } else {
-          erro_fk_vinculo.textContent = "";
+          erro_fk_vinculo.innerHTML = "";
         }
 
         if (isValido) {

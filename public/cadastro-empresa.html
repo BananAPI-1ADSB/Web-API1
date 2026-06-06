@@ -63,24 +63,24 @@
         let isValido = true;
 
         if (nome_empresa.value.trim() === "") {
-          erro_nome_empresa.textContent = "Nome é obrigatório";
+          erro_nome_empresa.innerHTML = "Nome é obrigatório";
           nome_empresa.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_nome_empresa.textContent = "";
+          erro_nome_empresa.innerHTML = "";
           nome_empresa.classList.remove("input-erro");
         }
 
         if (cnpj_empresa.value.trim() === "") {
-          erro_cnpj_empresa.textContent = "CNPJ é obrigatório";
+          erro_cnpj_empresa.innerHTML = "CNPJ é obrigatório";
           cnpj_empresa.classList.add("input-erro");
           isValido = false;
         } else if (cnpj_empresa.value.trim().length < 14) {
-          erro_cnpj_empresa.textContent = "CNPJ inválido";
+          erro_cnpj_empresa.innerHTML = "CNPJ inválido";
           cnpj_empresa.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_cnpj_empresa.textContent = "";
+          erro_cnpj_empresa.innerHTML = "";
           cnpj_empresa.classList.remove("input-erro");
         }
 
