@@ -10,6 +10,8 @@ function validarSessao() {
       window.location.pathname != "/cadastro-empresa.html" &&
       window.location.pathname != "/cadastro-endereco.html" &&
       window.location.pathname != "/cadastro-entreposto.html" &&
+      window.location.pathname != "/cadastro-camara.html" &&
+      window.location.pathname != "/cadastro-sensor.html" &&
       window.location.pathname != "/calculadora.html" &&
       window.location.pathname != "/suporte.html" &&
       window.location.pathname != "/"
@@ -43,3 +45,23 @@ function limparSessao() {
   sessionStorage.clear();
   window.location = "/login.html";
 }
+
+function toggleCadastro(event) {
+  event.stopPropagation(); 
+  
+  var menu = document.getElementById("dropdown-cadastro");
+  
+  if (menu.style.display === "none" || menu.style.display === "") {
+    menu.style.display = "block"; 
+  } else {
+    menu.style.display = "none";  
+  }
+}
+
+document.addEventListener("click", function() {
+  var menu = document.getElementById("dropdown-cadastro");
+  if (menu) {
+    menu.style.display = "none";
+  }
+});
+

@@ -632,3 +632,41 @@ input {
         background-color: #cbd5e1;
         cursor: not-allowed;
       }
+
+
+.menu-cadastro-escondido {
+  display: none; 
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15); 
+  min-width: 180px; 
+  z-index: 9999; 
+
+  padding: 8px 0;
+}
+
+
+.menu-cadastro-escondido a {
+  display: block !important; 
+  padding: 10px 16px;
+  color: #333333;
+  text-decoration: none;
+  text-align: left;
+  font-size: 14px;
+}
+
+
+.menu-cadastro-escondido a:hover {
+  background-color: #f3f4f6;
+  color: #000000;
+}
+
+
+.mostrar-dropdown {
+  display: block !important;
+}

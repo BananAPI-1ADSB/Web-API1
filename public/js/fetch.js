@@ -71,13 +71,32 @@ const fetchCadastrarUsuario = () => {
       }),
     }).then((res) => {
       if(res.ok) {
-          window.location.href = "cadastro-endereco.html"
+          window.location.href = "cadastro-camara.html"
           alert("Entreposto cadastrado com sucesso!")
       } else {
         alert("Erro ao cadastrar entreposto!")
       }
     })
   };
+
+const fetchCadastrarCamara = () => {
+  fetch("http://localhost:8080/camaras/cadastrar", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      nome: nome_camara,
+      tipo: tipo_camara,
+      fkEntreposto: Number(fk_entreposto),
+    }),
+  }).then((res) => {
+    if(res.ok) {
+        window.location.href = "cadastro-endereco.html"
+        alert("Câmara cadastrada com sucesso!")
+    } else {
+      alert("Erro ao cadastrar câmara!")
+    }
+  })
+};
 
 const fetchCadastrarEndereco = () => {
   fetch("http://localhost:8080/enderecos/cadastrar", {
@@ -132,5 +151,6 @@ const fetchLeitura = () => {
       }
     })
   }
+
 
 

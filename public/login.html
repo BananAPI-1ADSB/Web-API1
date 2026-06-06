@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <script src="./js/fetch.js"></script>
     <script src="./js/sessao.js"></script>
+    <script src="./js/limparErro.js"></script>
     <title>BananaAPI - Autenticação</title>
   </head>
   <body>
@@ -57,13 +58,6 @@
       
       let usuarioRegistrado = null;
 
-      function limparErro(campo) {
-        const erroId = `erro_${campo}`;
-        window[erroId].textContent = "";
-        if (window[campo]) {
-          window[campo].classList.remove("input-erro");
-        }
-      }
 
       function validarLogin() {
         let isValido = true;

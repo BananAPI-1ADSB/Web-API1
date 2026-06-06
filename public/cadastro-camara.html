@@ -17,25 +17,25 @@
           <div class="formulario">
 
             <div class="campo">
-              <label for="nome_camera">Nome da Câmera:</label>
+              <label for="nome_camara">Nome da Câmara:</label>
               <input
-                id="nome_camera"
+                id="nome_camara"
                 type="text"
-                placeholder="Ex: Câmera Corredor Principal"
-                oninput="limparErro('nome_camera')"
+                placeholder="Ex: Câmara Corredor Principal"
+                oninput="limparErro('nome_camara')"
               />
-              <span class="erro" id="erro_nome_camera"></span>
+              <span class="erro" id="erro_nome_camara"></span>
             </div>
 
             <div class="campo">
-              <label for="tipo_camera">Tipo:</label>
+              <label for="tipo_camara">Tipo:</label>
               <input
-                id="tipo_camera"
+                id="tipo_camara"
                 type="text"
                 placeholder="Ex: fixa, dome, PTZ"
-                oninput="limparErro('tipo_camera')"
+                oninput="limparErro('tipo_camara')"
               />
-              <span class="erro" id="erro_tipo_camera"></span>
+              <span class="erro" id="erro_tipo_camara"></span>
             </div>
 
             <div class="campo">
@@ -71,22 +71,22 @@
       function validarCamera() {
         let isValido = true;
 
-        if (nome_camera.value.trim() === "") {
-          erro_nome_camera.innerHTML = "Nome é obrigatório";
-          nome_camera.classList.add("input-erro");
+        if (nome_camara.value.trim() === "") {
+          erro_nome_camara.innerHTML = "Nome é obrigatório";
+          nome_camara.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_nome_camera.innerHTML = "";
-          nome_camera.classList.remove("input-erro");
+          erro_nome_camara.innerHTML = "";
+          nome_camara.classList.remove("input-erro");
         }
 
-        if (tipo_camera.value.trim() === "") {
-          erro_tipo_camera.innerHTML = "Tipo é obrigatório";
-          tipo_camera.classList.add("input-erro");
+        if (tipo_camara.value.trim() === "") {
+          erro_tipo_camara.innerHTML = "Tipo é obrigatório";
+          tipo_camara.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_tipo_camera.innerHTML = "";
-          tipo_camera.classList.remove("input-erro");
+          erro_tipo_camara.innerHTML = "";
+          tipo_camara.classList.remove("input-erro");
         }
 
         if (fk_entreposto.value.trim() === "") {
@@ -99,7 +99,7 @@
         }
 
         if (isValido) {
-          fetchCadastrarCamera();
+          fetchCadastrarCamara();
         }
       }
     </script>

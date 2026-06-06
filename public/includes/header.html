@@ -1,31 +1,39 @@
-
-      <div class="container">
-        <a href="/">
-          <h1 class="titulo">Banana<span>API</span></h1>
-        </a>
-        <ul class="navbar">
-          <li>
-            <span><a href="/">Inicial</a></span>
-          </li>
-          <li>|</li>
-          <li>
-            <span><a href="calculadora.html">Financeiro</a></span>
-          </li>
-          <li>|</li>
-          <li class="agora">
-            <span><a href="suporte.html">Suporte</a></span>
-          </li>
-          <li>|</li>
-          <li class="agora">
-            <span><a href="login.html">Login</a></span>
-          </li>
-          <li>|</li>
-          <li class="agora">
-            <span><a href="cadastro-usuario.html">Cadastrar Usuario</a></span>
-          </li>
-          <li>|</li>
-          <li class="agora">
-            <span><a href="cadastro-empresa.html">Cadastrar Empresa</a></span>
-          </li>
-        </ul>
+<div class="container">
+  <a href="/">
+    <h1 class="titulo">Banana<span>API</span></h1>
+  </a>
+  <ul class="navbar">
+    <li>
+      <span><a href="/">Inicial</a></span>
+    </li>
+    <li>|</li>
+    <li>
+      <span><a href="calculadora.html">Financeiro</a></span>
+    </li>
+    <li>|</li>
+    <li class="agora">
+      <span><a href="suporte.html">Suporte</a></span>
+    </li>
+    <li>|</li>
+    <li class="agora">
+      <span><a href="login.html">Login</a></span>
+    </li>
+    <li>|</li>
+    
+    <li class="agora" style="position: relative;">
+      <span onclick="toggleCadastro(event)" style="cursor: pointer; user-select: none;">
+        Cadastrar ▼
+      </span>
+      
+      <div id="dropdown-cadastro" class="menu-cadastro-escondido">
+        <a href="cadastro-usuario.html">Usuário</a>
+        <a href="cadastro-empresa.html">Empresa</a>
+        <a href="cadastro-endereco.html">Endereço</a>
+        <a href="cadastro-entreposto.html">Entreposto</a>
+        <a href="cadastro-camara.html">Câmara</a>
+        <a href="cadastro-sensor.html">Câmara</a>
       </div>
+    </li>
+  </ul>
+</div>
+
