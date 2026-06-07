@@ -749,22 +749,25 @@ async function atualizarLeitura() {
         if (res && res.length > 0) {
             const ultimaLeitura = res[res.length - 1];
             const valorTemperatura = parseFloat(ultimaLeitura.temperatura);
-            let valorHora = ultimaLeitura.dataHora
-            valorHora = valorHora.split('T')[1].slice(0, -5)
+            
+            let valorHora = ultimaLeitura.dataHora;
+            valorHora = valorHora.split('T')[1].slice(0, -5);
 
             if (leituras.length < 7) {
                 leituras.push(valorTemperatura);
-                labels.push(valorHora)
+                labels.push(valorHora);
             } else {
-                for (let i = 0; i < leituras.length - 1; i++) {
-                    leituras[i] = leituras[i + 1];
-                }
-                leituras[leituras.length - 1] = valorTemperatura;
+                leituras.shift();
+                labels.shift();
+                leituras.push(valorTemperatura);
+                labels.push(valorHora);
             }
             
-            if (grafico && grafico.data && grafico.data.datasets && grafico.data.datasets.length > 0) {
-                grafico.data.datasets[0].data = leituras;
-                
+            if (grafico && grafico.data) {
+                if (grafico.data.datasets && grafico.data.datasets.length > 0) {
+                    grafico.data.datasets[0].data = leituras;
+                }
+                grafico.data.labels = labels; 
                 grafico.update();
             }
             
