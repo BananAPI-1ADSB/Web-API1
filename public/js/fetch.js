@@ -129,7 +129,7 @@ const fetchCadastrarEndereco = () => {
   })
 };
 
-const fetchSuporte = () => {
+const fetchSuporte = (texto) => {
   return fetch("http://localhost:8080/bobia/perguntar", {
     method: "POST",
     headers: { "Content-type": "application/json" },
@@ -139,10 +139,10 @@ const fetchSuporte = () => {
   }).then((res) => {
     if (res.ok) {
       res.json().then((res) => {
-        adicionarMensage(res, 'ia')
+        adicionarMensagem(res.resposta, 'ia')
       })
     } else {
-      adicionarMensage('Falha na conexao com BobIa...', 'ia')
+      adicionarMensagem('Falha na conexao com BobIa...', 'ia')
     }
   })
 }

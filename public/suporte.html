@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/sessao.js"></script>
+    <script src="js/fetch.js"></script>
     <title>BananaAPI - Suporte</title>
   </head>
   <body>
@@ -18,7 +19,7 @@
             Tire suas dúvidas com o nosso assistente virtual.
           </p>
 
-          <div class="chat-box" id="chat_box">
+          <div class="chat-box" id="chat_box" style="overflow-y: auto;">
             <div class="mensagem mensagem-ia">
               Olá! Sou o assistente da BananaAPI. Como posso te ajudar hoje?
             </div>
@@ -51,7 +52,7 @@
           
 
         adicionarMensagem(texto, "usuario");
-        fetchSuporte()
+        fetchSuporte(texto)
         input_mensagem.value = "";
       }
 
