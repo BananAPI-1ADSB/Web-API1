@@ -134,6 +134,10 @@
       window.onload = () => {
         headerSessao()
       }
+
+      fk_empresa_end.value = sessionStorage.ID_EMPRESA;
+      fk_entreposto_end.value = sessionStorage.ID_ENTREPOSTO;
+
       function validarEndereco() {
         let isValido = true;
 

@@ -9,10 +9,8 @@ const fetchAutenticarUsuario = () => {
   }).then((res) => {
     if (res.ok) {
       res.json().then((json) => {
-        sessionStorage.ID_USUARIO = json.id;
         sessionStorage.EMAIL_USUARIO = json.email;
         sessionStorage.NOME_USUARIO = json.nome;
-        sessionStorage.SENHA_USUARIO = json.senha;
 
         alert("Login realizado com sucesso!");
         window.location.href = "/";
@@ -53,8 +51,12 @@ const fetchCadastrarUsuario = () => {
       }),
     }).then((res) => {
       if(res.ok) {
+        res.json().then((response ) => {
+          sessionStorage.ID_EMPRESA = response.insertId
           window.location.href = "cadastro-entreposto.html"
-          alert("Empresa cadastrada com sucesso!")
+          alert(`Empresa cadastrada com sucesso!\n Id da Empresa: ${response.insertId}`)
+        } 
+        )
       } else {
         alert("Erro ao cadastrar empresa!")
       }
@@ -71,8 +73,12 @@ const fetchCadastrarUsuario = () => {
       }),
     }).then((res) => {
       if(res.ok) {
+        res.json().then((response) => {
+          sessionStorage.ID_ENTREPOSTO = response.insertId
           window.location.href = "cadastro-camara.html"
-          alert("Entreposto cadastrado com sucesso!")
+          alert(`Entreposto cadastrado com sucesso!\n Id do Entreposto: ${response.insertId}`)
+
+        })
       } else {
         alert("Erro ao cadastrar entreposto!")
       }
