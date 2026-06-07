@@ -11,6 +11,7 @@ const fetchAutenticarUsuario = () => {
       res.json().then((json) => {
         sessionStorage.EMAIL_USUARIO = json.email;
         sessionStorage.NOME_USUARIO = json.nome;
+        sessionStorage.ID_EMPRESA = json.fkEmpresa
 
         alert("Login realizado com sucesso!");
         window.location.href = "/";
