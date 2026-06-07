@@ -170,6 +170,7 @@ const fetchLeitura = () => {
       if (res.ok) {
          res.json().then((res) => {
           let select = document.getElementById('fk_entreposto_end')
+          select.innerHTML = `<option value="" disabled selected>Selecione um entreposto</option>`
           for(let i = 0; i < res.length; i++) {
             let option = `<option value="${res[i].idEntreposto}">${res[i].nome}</option>`
             select.innerHTML += option
