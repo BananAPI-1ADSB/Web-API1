@@ -91,9 +91,9 @@ const fetchCadastrarCamara = () => {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
-      nome: nome_camara,
-      tipo: tipo_camara,
-      fkEntreposto: Number(fk_entreposto),
+      nome: nome_camara.value,
+      tipo: tipo_camara.value,
+      fkEntreposto: Number(fk_entreposto.value),
     }),
   }).then((res) => {
     if(res.ok) {
@@ -158,6 +158,25 @@ const fetchLeitura = () => {
       }
     })
   }
+
+  const fetchEntrepostosCadastrados = () => {
+    return fetch("http://localhost:8080/entrepostos/listar", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        fkEmpresa: Number(sessionStorage.ID_EMPRESA)
+      })
+    }).then((res) => {
+      if (res.ok) {
+         res.json().then((res) => {
+          let select = document.getElementById('fk_entreposto_end')
+          for(let i = 0; i < res.length; i++) {
+            let option = `<option value="${res[i].idEntreposto}">${res[i].nome}</option>`
+            select.innerHTML += option
+          }})
+        }})
+      }
+    
 
 
 

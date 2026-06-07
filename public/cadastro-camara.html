@@ -41,12 +41,13 @@
 
             <div class="campo">
               <label for="fk_entreposto">ID do Entreposto:</label>
-              <input
+              <select name="fk_entreposto_end" id="fk_entreposto_end"></select>
+              <!-- <input
                 id="fk_entreposto"
                 type="number"
                 placeholder="Informe o ID do entreposto vinculado"
                 oninput="limparErro('fk_entreposto')"
-              />
+              /> -->
               <span class="erro" id="erro_fk_entreposto"></span>
             </div>
 
@@ -70,7 +71,7 @@
         headerSessao()
       }
 
-      fk_entreposto.value = sessionStorage.ID_ENTREPOSTO
+      fetchEntrepostosCadastrados()
 
       function validarCamera() {
         let isValido = true;

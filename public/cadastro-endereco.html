@@ -105,13 +105,14 @@
             </div>
 
             <div class="campo">
-              <label for="fk_entreposto_end">ID do Entreposto:</label>
-              <input
+              <label for="fk_entreposto_end">Entreposto:</label>
+              <select name="fk_entreposto_end" id="fk_entreposto_end"></select>
+              <!-- <input
                 id="fk_entreposto_end"
                 type="number"
                 placeholder="ID do entreposto (opcional)"
                 oninput="limparErro('fk_vinculo')"
-              />
+              /> -->
               <span class="erro" id="erro_fk_vinculo"></span>
             </div>
 
@@ -135,8 +136,9 @@
         headerSessao()
       }
 
+      fetchEntrepostosCadastrados()
+
       fk_empresa_end.value = sessionStorage.ID_EMPRESA;
-      fk_entreposto_end.value = sessionStorage.ID_ENTREPOSTO;
 
       function validarEndereco() {
         let isValido = true;
