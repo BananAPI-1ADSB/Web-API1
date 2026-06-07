@@ -762,7 +762,7 @@ async function atualizarLeitura() {
                 leituras.push(valorTemperatura);
                 labels.push(valorHora);
             }
-            
+
             if (grafico && grafico.data) {
                 if (grafico.data.datasets && grafico.data.datasets.length > 0) {
                     grafico.data.datasets[0].data = leituras;
@@ -781,7 +781,7 @@ async function atualizarLeitura() {
     }
 }
 
-setInterval(atualizarLeitura, 2000);
+setInterval(atualizarLeitura, 3000);
 </script>
 
 </body>
