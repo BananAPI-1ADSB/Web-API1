@@ -679,3 +679,7 @@ input {
   width: 100%;
   font-size: 14px;
 }
+
+#fk_entreposto_end_label {
+  margin-top: 20px;
+}

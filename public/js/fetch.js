@@ -54,7 +54,6 @@ const fetchCadastrarUsuario = () => {
       if(res.ok) {
         res.json().then((response ) => {
           sessionStorage.ID_EMPRESA = response.insertId
-          window.location.href = "cadastro-entreposto.html"
           alert(`Empresa cadastrada com sucesso!\n Id da Empresa: ${response.insertId}`)
         } 
         )
@@ -70,13 +69,11 @@ const fetchCadastrarUsuario = () => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         nome: nome_entreposto.value,
-        fkEmpresa: Number(fk_empresa.value),
+        fkEmpresa: sessionStorage.ID_EMPRESA,
       }),
     }).then((res) => {
       if(res.ok) {
         res.json().then((response) => {
-          sessionStorage.ID_ENTREPOSTO = response.insertId
-          window.location.href = "cadastro-camara.html"
           alert(`Entreposto cadastrado com sucesso!\n Id do Entreposto: ${response.insertId}`)
 
         })
@@ -97,7 +94,6 @@ const fetchCadastrarCamara = () => {
     }),
   }).then((res) => {
     if(res.ok) {
-        window.location.href = "cadastro-endereco.html"
         alert("Câmara cadastrada com sucesso!")
     } else {
       alert("Erro ao cadastrar câmara!")
@@ -117,12 +113,11 @@ const fetchCadastrarEndereco = () => {
       cidade: cidade_endereco.value,
       complemento: complemento_endereco.value,
       siglaEstado: estado_endereco.value,
-      fkEmpresa: Number(fk_empresa_end.value),
+      fkEmpresa: sessionStorage.ID_EMPRESA,
       fkEntreposto: Number(fk_entreposto_end.value),
     }),
   }).then((res) => {
     if(res.ok) {
-        window.location.href = "/login.html"
         alert("Endereco cadastrado com sucesso!")
     } else {
       alert("Erro ao cadastrar endereco!")
