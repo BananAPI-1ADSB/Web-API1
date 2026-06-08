@@ -529,25 +529,30 @@
     </div>
 
     <script>
-      window.onload = function () {
-        localStorage.removeItem("ID_CAMARA");
-        localStorage.removeItem("ID_ENTREPOSTO");
-        fetchEntrepostosCadastrados();
-      };
+        
+        window.onload = function() {
+            fetchEntrepostosCadastrados();
+         }
+window.addEventListener('beforeunload', () => {
+    sessionStorage.removeItem('ID_CAMARA');
+    sessionStorage.removeItem('ID_ENTREPOSTO');
+});
 
       const onchangeSelectEntreposto = () => {
         sessionStorage.ID_ENTREPOSTO = Number(
           document.getElementById("fk_entreposto_end").value,
         );
         fetchCamarasCadastradas(sessionStorage.ID_ENTREPOSTO);
+        clearInterval(interval);
       };
 
       const onchangeSelectCamara = () => {
-        sessionStorage.ID_CAMARA = Number(
-          document.getElementById("fk_camaras").value,
-        );
-        setInterval(atualizarLeitura, 3000);
-      };
+          sessionStorage.ID_CAMARA = Number(
+              document.getElementById("fk_camaras").value,
+            );
+            const interval = setInterval(atualizarLeitura, 3000);
+        };
+
 
       let leituras = [];
       let labels = [];

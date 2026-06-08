@@ -94,14 +94,14 @@
           tipo_camara.classList.remove("input-erro");
         }
 
-        if (fk_entreposto.value.trim() === "") {
-          erro_fk_entreposto.innerHTML = "ID do entreposto é obrigatório";
-          fk_entreposto.classList.add("input-erro");
-          isValido = false;
-        } else {
-          erro_fk_entreposto.innerHTML = "";
-          fk_entreposto.classList.remove("input-erro");
-        }
+        // if (fk_entreposto.value.trim() === "") {
+        //   erro_fk_entreposto.innerHTML = "ID do entreposto é obrigatório";
+        //   fk_entreposto.classList.add("input-erro");
+        //   isValido = false;
+        // } else {
+        //   erro_fk_entreposto.innerHTML = "";
+        //   fk_entreposto.classList.remove("input-erro");
+        // }
 
         if (isValido) {
           fetchCadastrarCamara();
