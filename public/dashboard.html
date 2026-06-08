@@ -869,7 +869,9 @@ function statusGeralCamaras(){
               for (let i = 0; i < alertas.length; i++) {
                 let leituraAtual = alertas[i];
                 cardLeituraAtualMsg = leituraAtual.mensagem;
-                cardLeituraAtualDtHora = leituraAtual.dataHora;
+                cardLeituraAtualDtHora = new Date(
+                  leituraAtual.dataHora,
+                ).toLocaleString("pt-BR");
 
                 if (cardLeituraAtualMsg.includes("alarmantemente")) {
                   mensagem += `
