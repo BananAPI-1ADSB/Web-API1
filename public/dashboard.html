@@ -291,6 +291,36 @@ border-radius: 12px;
 padding: 18px;
 }
 
+
+.listaLeiturasAtuais{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.cardLeituraAtual{
+    width: 100%;   
+    height: auto;
+    /*background-color: #fee2e2;*/
+    border-radius: 10px;
+    padding: 17px;
+    display: flex;
+    flex-direction: row; /* não tira, deixa aq só pra ter crtz q vai ficar row*/
+    gap: 40px;
+    justify-content: space-between;
+}
+
+
+.cardLeituraAtual > .dtHora{
+    color: black;
+
+}
+
+
+
+
+
 .msgPrincipal.verde,
 .msgPrincipal.amarelo,
 .msgPrincipal.vermelho {
@@ -535,9 +565,9 @@ Sistema operacional
 Entreposto operando normalmente
 </div>
 <div class="status-geral-msg">
-
-<div class="msgPrincipal" id="msgPrincipal"></div>
-<div class="msgSubtexto" id="msgSubtexto"></div>
+    Últimas temperaturas preocupantes do sistema
+    <div id="ttt" class="listaLeiturasAtuais">
+    </div>
 </div>
 
 
@@ -843,7 +873,7 @@ statusGeralCamaras();
 
 setInterval(atualizarLeitura, 3000);
 
-
+/*
 var msgPrincipalElemento = msgPrincipal;
 var msgSubtextoElemento = msgSubtexto;
 //let temperaturasTeste = [11, 28, 20, 21, 30, 17, 22, 9, 18, 14];
@@ -915,6 +945,69 @@ function statusGeralCamaras(){
 
 
 }
+    */
+
+    function listaAlertas(){
+        let vetorMockado = [
+            {
+                msg: 'Alerta de temperatura: 25ºC - Temperatura alarmantemente alta',
+                dtHora: '2026-06-08 15:00:00'
+            }, 
+            {
+                msg: 'Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa',
+                dtHora: '2026-06-08 14:00:00'
+            }, 
+            {
+                msg: 'Alerta de temperatura: 25ºC - Temperatura criticamente baixa ',
+                dtHora: '2026-06-08 13:00:00'
+            }, 
+            {
+                msg: 'Alerta de temperatura: 25ºC - Temperatura criticamente alta',
+                dtHora: '2026-06-08 12:00:00'
+            }, 
+            {
+                msg: 'Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa',
+                dtHora: '2026-06-08 11:00:00'
+            }
+        ];
+
+
+        let cardLeituraAtualMsg = '';
+        let cardLeituraAtualDtHora = '';
+        let mensagem = '';
+        for(let i = 0; i < vetorMockado.length; i++){
+            let leituraAtual = vetorMockado[i];
+                cardLeituraAtualMsg = leituraAtual.msg;
+                cardLeituraAtualDtHora = leituraAtual.dtHora;
+                
+
+                if (cardLeituraAtualMsg.includes('alarmantemente')){
+                    mensagem += `
+                                <div class="cardLeituraAtual" style="background-color:#fef3c7; color:#b45309">
+                                    <span class="msg">${cardLeituraAtualMsg}</span>
+                                    <span class="dtHora">${cardLeituraAtualDtHora}</span>
+                                </div>
+                    `;
+                } else if (cardLeituraAtualMsg.includes('criticamente')){
+                    mensagem += `
+                                <div class="cardLeituraAtual" style="background-color:#fee2e2; color:#b91c1c">
+                                    <span class="msg">${cardLeituraAtualMsg}</span>
+                                    <span class="dtHora">${cardLeituraAtualDtHora}</span>
+                                </div>
+                    `;                    
+                }
+
+        }
+
+        ttt.innerHTML = mensagem;
+        //console.log(cardLeituraAtualDtHora, cardLeituraAtualMsg);
+
+
+
+
+    }
+
+listaAlertas();
 atualizarKPIs();
 
 atualizarCamaraSelecionada();
