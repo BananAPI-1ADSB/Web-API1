@@ -1,5 +1,5 @@
 const fetchAutenticarUsuario = () => {
-  fetch("http://10.18.33.30:8080/usuarios/autenticar", {
+  fetch("http://localhost:8080/usuarios/autenticar", {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
@@ -143,10 +143,13 @@ const fetchSuporte = (texto) => {
   })
 }
 
-const fetchLeitura = () => {
+const fetchLeitura = (a) => {
   return fetch("http://localhost:8080/leituras/listar", {
-    method: "GET",
-    headers: { "Content-type": "application/json" }
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      fkSensor: a
+    })
   }).then((res) => {
     if (res.ok) {
         return res.json()
@@ -172,6 +175,39 @@ const fetchLeitura = () => {
           }})
         }})
       }
+
+
+  const fetchCamarasCadastradas = (a) => {
+    return fetch("http://localhost:8080/camaras/listar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fkEntreposto: a, 
+      })
+    }).then((res) => {
+      if (res.ok) {
+         res.json().then((res) => {
+          let select = document.getElementById('fk_camaras')
+          select.innerHTML = `<option value="" disabled selected>Selecione uma Camara</option>`
+          for(let i = 0; i < res.length; i++) {
+            let option = `<option value="${res[i].idCamara}">${res[i].nome}</option>`
+            select.innerHTML += option
+          }})
+        }})
+      } 
+
+      const fetchAlertas = () => {
+        return fetch("http://localhost:8080/alertas/listar", {
+          method: "GET",
+          headers: { "Content-type": "application/json" }
+        }).then((res) => {
+          if (res.ok) {
+              res.json().then((res) => {
+                return console.log(res)
+                }
+          )}
+          })
+        }
     
 
 

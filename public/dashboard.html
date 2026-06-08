@@ -264,7 +264,7 @@ border: 1px solid #ccc;
 background-color: white;
 color: #222;
 }
-.select-camara{
+.select-camara, .select-entreposto {
 margin-top:12px;
 width:100%;
 }
@@ -465,24 +465,22 @@ Sistema operacional
 <section class="kpis">
 
     <div class="kpi destaque verde-kpi" id="kpiTempoReal">
-
         <div>
 
-            <span>Câmara Selecionada</span>
+            <div>
+                <span>Entreposto Selecionado</span>
+                <br>
+                <select id="fk_entreposto_end" class="select-entreposto" onchange="onchangeSelectEntreposto()">
+                </select>
+            </div>
+            <br>
 
-            <select id="selectCamara" class="select-camara">
-                <option value="0">Câmara Principal</option>
-                <option value="1">Câmara 1</option>
-                <option value="2">Câmara 2</option>
-                <option value="3">Câmara 3</option>
-                <option value="4">Câmara 4</option>
-                <option value="5">Câmara 5</option>
-                <option value="6">Câmara 6</option>
-                <option value="7">Câmara 7</option>
-                <option value="8">Câmara 8</option>
-                <option value="9">Câmara 9</option>
-                <option value="10">Câmara 10</option>
-            </select>
+            <div>
+                <span>Câmara Selecionada</span>
+                <br>
+                <select id="fk_camaras" class="select-camara" onchange="onchangeSelectCamara()">
+                </select>
+            </div>
 
             <h1 id="temperaturaTempoReal">
                 0°C
@@ -585,6 +583,17 @@ Entreposto operando normalmente
 </div>
 
 <script>
+const onchangeSelectEntreposto = (e) => { 
+    sessionStorage.ID_ENTREPOSTO = Number(document.getElementById("fk_entreposto_end").value);
+    fetchCamarasCadastradas(sessionStorage.ID_ENTREPOSTO); 
+}
+
+const onchangeSelectCamara = (e) => {
+    sessionStorage.ID_CAMARA = Number(document.getElementById("fk_camaras").value);
+}
+
+fetchEntrepostosCadastrados();
+
 let leituras = [];    
 let labels = [];    
 
@@ -657,13 +666,8 @@ function atualizarCamaraSelecionada(){
     );
 }
 
-selectCamara.addEventListener("change", function(){
 
-    indiceCamaraSelecionada = Number(this.value);
 
-    atualizarCamaraSelecionada();
-
-});
 
 function gerarTemperatura() {
     return Math.floor(Math.random() * (30 - 10 + 1)) + 10;
@@ -826,7 +830,7 @@ function atualizarTemperaturaArduino(valor){
 
 async function atualizarLeitura() {
     try {
-        const res = await fetchLeitura();
+        const res = await fetchLeitura(sessionStorage.ID_CAMARA);
         
         if (res && res.length > 0) {
             const ultimaLeitura = res[res.length - 1];
