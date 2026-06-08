@@ -1,883 +1,788 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard BANANAPI</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="js/fetch.js"></script>
-
-<style>
-
-*{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: Arial, Helvetica, sans-serif;
-}
-
-body{
-background-color: #fffdf5;
-color: #222;
-}
-
-.layout{
-display: flex;
-min-height: 100vh;
-}
-
-.sidebar{
-width: 250px;
-background-color: #facc15;
-padding: 30px;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-}
-
-.logo{
-font-size: 30px;
-color: #222;
-margin-bottom: 40px;
-}
-
-.logo span{
-color: white;
-}
-
-.sidebar nav{
-display: flex;
-flex-direction: column;
-gap: 12px;
-}
-
-.sidebar a{
-text-decoration: none;
-background-color: white;
-color: #222;
-padding: 14px;
-border-radius: 10px;
-font-weight: bold;
-}
-
-.sidebar .active{
-background-color: #222;
-color: white;
-}
-
-.logout{
-text-align: center;
-background-color: #ef4444 !important;
-color: white !important;
-}
-
-.conteudo{
-flex: 1;
-padding: 35px;
-}
-
-.topo{
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 30px;
-}
-
-.topo h2{
-font-size: 32px;
-color: #222;
-}
-
-.topo p{
-color: #555;
-margin-top: 5px;
-}
-
-.topo-info{
-display: flex;
-align-items: center;
-gap: 20px;
-color: #222;
-font-weight: bold;
-}
-
-.status-geral{
-background-color: #dcfce7;
-color: #15803d;
-padding: 10px 15px;
-border-radius: 10px;
-}
-
-.kpis{
-display:grid;
-grid-template-columns:2fr 1fr 1fr 1fr;
-gap:20px;
-margin-bottom:30px;
-}
-
-.kpi{
-background-color: white;
-border-radius: 18px;
-padding: 20px;
-border: 2px solid #222;
-}
-
-.kpi-topo{
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.kpi span{
-color: #555;
-}
-
-.kpi h1,
-.kpi h2{
-font-size: 32px;
-margin-top: 10px;
-color: #222;
-}
-
-.kpi p{
-margin-top: 6px;
-color: #666;
-}
-
-.destaque{
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.kpi-direita{
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 10px;
-}
-
-.indicador{
-width: 12px;
-height: 12px;
-border-radius: 50%;
-}
-
-.verde-indicador{
-background-color: #22c55e;
-}
-
-.amarelo-indicador{
-background-color: #f59e0b;
-}
-
-.vermelho-indicador{
-background-color: #ef4444;
-}
-
-.verde-kpi{
-border-left: 8px solid #22c55e;
-}
-
-.amarelo-kpi{
-border-left: 8px solid #f59e0b;
-}
-
-.vermelho-kpi{
-border-left: 8px solid #ef4444;
-}
-
-.verde{
-background-color: #dcfce7;
-color: #15803d;
-}
-
-.amarelo{
-background-color: #fef3c7;
-color: #b45309;
-}
-
-.vermelho{
-background-color: #fee2e2;
-color: #b91c1c;
-}
-
-.kpi-status{
-padding: 8px 12px;
-border-radius: 10px;
-font-size: 12px;
-font-weight: bold;
-}
-
-.badge{
-padding: 8px 12px;
-border-radius: 10px;
-font-size: 12px;
-font-weight: bold;
-}
-
-.estavel{
-background-color: #dcfce7;
-color: #15803d;
-}
-
-.alerta{
-background-color: #fef3c7;
-color: #b45309;
-}
-
-.critico{
-background-color: #fee2e2;
-color: #b91c1c;
-}
-
-.monitoramento{
-display:grid;
-grid-template-columns:3fr 1.2fr;
-gap:20px;
-margin-bottom:30px;
-align-items:stretch;
-}
-
-.grafico-area,
-.painel-status,
-.alertas{
-background-color: white;
-border: 2px solid #222;
-border-radius: 18px;
-padding: 24px;
-}
-
-.grafico-header{
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 20px;
-}
-
-select{
-padding: 10px;
-border-radius: 10px;
-border: 1px solid #ccc;
-background-color: white;
-color: #222;
-}
-.select-camara, .select-entreposto {
-margin-top:12px;
-width:100%;
-}
-
-.painel-status{
-display:flex;
-flex-direction:column;
-gap:20px;
-}
-
-.status-box{
-padding: 18px;
-border-radius: 12px;
-font-weight: bold;
-
-}
-
-.status-geral-msg{
-background-color: #fbfbfb;
-width: 100%;
-height: auto;
-border: 2px solid #222;
-border-radius: 12px;
-padding: 18px;
-}
-
-
-.listaLeiturasAtuais{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.cardLeituraAtual{
-    width: 100%;   
-    height: auto;
-    /*background-color: #fee2e2;*/
-    border-radius: 10px;
-    padding: 17px;
-    display: flex;
-    flex-direction: row; /* não tira, deixa aq só pra ter crtz q vai ficar row*/
-    gap: 40px;
-    justify-content: space-between;
-}
-
-
-.cardLeituraAtual > .dtHora{
-    color: black;
-
-}
-
-
-
-
-
-.msgPrincipal.verde,
-.msgPrincipal.amarelo,
-.msgPrincipal.vermelho {
-    font-weight: bold;
-    font-size: 25px;
-    padding: 18px;
-    border-radius: 15px;
-}
-
-.msgPrincipal.verde{
-background-color: #dcfce7;
-color: #15803d;
-}
-
-.msgPrincipal.amarelo{
-background-color: #fef3c7;
-color: #b45309;
-}
-
-.msgPrincipal.vermelho{
-background-color: #fee2e2;
-color: #b91c1c;
-}
-
-.msgSubtexto{
-    margin-top: 5px;
-    padding: 18px;
-    font-size: 19px;
-}
-
-.subtextoAlerta{
-    /*background-color: #fee2e2;*/
-    color: #b91c1c;
-}
-.subtextoAtencao{
-    /*background-color: #fef3c7;*/
-    color: #b4ab09;
-}
-
-.subtextoNormal{
-    color: #15803d;
-}
-
-
-.info-status{
-display: flex;
-flex-direction: column;
-gap: 5px;
-}
-
-.info-status span{
-color: #666;
-}
-
-.estatisticas-alertas{
-display: grid;
-grid-template-columns: 1fr;
-}
-
-.alertas{
-display: flex;
-flex-direction: column;
-gap: 18px;
-}
-
-.alerta-item{
-padding: 18px;
-border-radius: 12px;
-display: flex;
-gap: 15px;
-align-items: center;
-}
-
-@media screen and (max-width: 1400px){
-
-.kpis{
-grid-template-columns: 1fr 1fr;
-}
-
-.monitoramento{
-grid-template-columns: 1fr;
-}
-
-}
-
-@media screen and (max-width: 900px){
-
-.kpis{
-grid-template-columns: 1fr;
-}
-
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="layout">
-
-<aside class="sidebar">
-
-<div>
-
-<h1 class="logo">
-BANANA<span>API</span>
-</h1>
-
-<nav>
-<a class="active" href="dashboard.html">Dashboard</a>
-<a href="calculadora.html">Calculadora</a>
-<a href="home.html">Início</a>
-<a href="suporte.html">Suporte</a>
-</nav>
-
-</div>
-
-
-</aside>
-
-<main class="conteudo">
-
-<header class="topo">
-
-<div>
-<h2 id="saudacao"></h2>
-<p>Monitoramento inteligente de bananas nanicas</p>
-</div>
-
-<div class="topo-info">
-
-<span id="horaAtual"></span>
-
-<div class="status-geral">
-Sistema operacional
-</div>
-
-</div>
-
-</header>
-
-<section class="kpis">
-
-    <div class="kpi destaque verde-kpi" id="kpiTempoReal">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard BANANAPI</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/fetch.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background-color: #fffdf5;
+        color: #222;
+      }
+
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: #facc15;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 30px;
+        color: #222;
+        margin-bottom: 40px;
+      }
+
+      .logo span {
+        color: white;
+      }
+
+      .sidebar nav {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .sidebar a {
+        text-decoration: none;
+        background-color: white;
+        color: #222;
+        padding: 14px;
+        border-radius: 10px;
+        font-weight: bold;
+      }
+
+      .sidebar .active {
+        background-color: #222;
+        color: white;
+      }
+
+      .logout {
+        text-align: center;
+        background-color: #ef4444 !important;
+        color: white !important;
+      }
+
+      .conteudo {
+        flex: 1;
+        padding: 35px;
+      }
+
+      .topo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .topo h2 {
+        font-size: 32px;
+        color: #222;
+      }
+
+      .topo p {
+        color: #555;
+        margin-top: 5px;
+      }
+
+      .topo-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        color: #222;
+        font-weight: bold;
+      }
+
+      .status-geral {
+        background-color: #dcfce7;
+        color: #15803d;
+        padding: 10px 15px;
+        border-radius: 10px;
+      }
+
+      .kpis {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .kpi {
+        background-color: white;
+        border-radius: 18px;
+        padding: 20px;
+        border: 2px solid #222;
+      }
+
+      .kpi-topo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .kpi span {
+        color: #555;
+      }
+
+      .kpi h1,
+      .kpi h2 {
+        font-size: 32px;
+        margin-top: 10px;
+        color: #222;
+      }
+
+      .kpi p {
+        margin-top: 6px;
+        color: #666;
+      }
+
+      .destaque {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .kpi-direita {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .indicador {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      .verde-indicador {
+        background-color: #22c55e;
+      }
+
+      .amarelo-indicador {
+        background-color: #f59e0b;
+      }
+
+      .vermelho-indicador {
+        background-color: #ef4444;
+      }
+
+      .verde-kpi {
+        border-left: 8px solid #22c55e;
+      }
+
+      .amarelo-kpi {
+        border-left: 8px solid #f59e0b;
+      }
+
+      .vermelho-kpi {
+        border-left: 8px solid #ef4444;
+      }
+
+      .verde {
+        background-color: #dcfce7;
+        color: #15803d;
+      }
+
+      .amarelo {
+        background-color: #fef3c7;
+        color: #b45309;
+      }
+
+      .vermelho {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .kpi-status {
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .badge {
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .estavel {
+        background-color: #dcfce7;
+        color: #15803d;
+      }
+
+      .alerta {
+        background-color: #fef3c7;
+        color: #b45309;
+      }
+
+      .critico {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .monitoramento {
+        display: grid;
+        grid-template-columns: 3fr 1.2fr;
+        gap: 20px;
+        margin-bottom: 30px;
+        align-items: stretch;
+      }
+
+      .grafico-area,
+      .painel-status,
+      .alertas {
+        background-color: white;
+        border: 2px solid #222;
+        border-radius: 18px;
+        padding: 24px;
+      }
+
+      .grafico-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      select {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        background-color: white;
+        color: #222;
+      }
+      .select-camara,
+      .select-entreposto {
+        margin-top: 12px;
+        width: 100%;
+      }
+
+      .painel-status {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .status-box {
+        padding: 18px;
+        border-radius: 12px;
+        font-weight: bold;
+      }
+
+      .status-geral-msg {
+        background-color: #fbfbfb;
+        width: 100%;
+        height: auto;
+        border: 2px solid #222;
+        border-radius: 12px;
+        padding: 18px;
+      }
+
+      .listaLeiturasAtuais {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .cardLeituraAtual {
+        width: 100%;
+        height: auto;
+        /*background-color: #fee2e2;*/
+        border-radius: 10px;
+        padding: 17px;
+        display: flex;
+        flex-direction: row; /* não tira, deixa aq só pra ter crtz q vai ficar row*/
+        gap: 40px;
+        justify-content: space-between;
+      }
+
+      .cardLeituraAtual > .dtHora {
+        color: black;
+      }
+
+      .msgPrincipal.verde,
+      .msgPrincipal.amarelo,
+      .msgPrincipal.vermelho {
+        font-weight: bold;
+        font-size: 25px;
+        padding: 18px;
+        border-radius: 15px;
+      }
+
+      .msgPrincipal.verde {
+        background-color: #dcfce7;
+        color: #15803d;
+      }
+
+      .msgPrincipal.amarelo {
+        background-color: #fef3c7;
+        color: #b45309;
+      }
+
+      .msgPrincipal.vermelho {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .msgSubtexto {
+        margin-top: 5px;
+        padding: 18px;
+        font-size: 19px;
+      }
+
+      .subtextoAlerta {
+        /*background-color: #fee2e2;*/
+        color: #b91c1c;
+      }
+      .subtextoAtencao {
+        /*background-color: #fef3c7;*/
+        color: #b4ab09;
+      }
+
+      .subtextoNormal {
+        color: #15803d;
+      }
+
+      .info-status {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .info-status span {
+        color: #666;
+      }
+
+      .estatisticas-alertas {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .alertas {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .alerta-item {
+        padding: 18px;
+        border-radius: 12px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      @media screen and (max-width: 1400px) {
+        .kpis {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .monitoramento {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media screen and (max-width: 900px) {
+        .kpis {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
         <div>
+          <h1 class="logo">BANANA<span>API</span></h1>
 
+          <nav>
+            <a class="active" href="dashboard.html">Dashboard</a>
+            <a href="calculadora.html">Calculadora</a>
+            <a href="home.html">Início</a>
+            <a href="suporte.html">Suporte</a>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="conteudo">
+        <header class="topo">
+          <div>
+            <h2 id="saudacao"></h2>
+            <p>Monitoramento inteligente de bananas nanicas</p>
+          </div>
+
+          <div class="topo-info">
+            <span id="horaAtual"></span>
+
+            <div class="status-geral">Sistema operacional</div>
+          </div>
+        </header>
+
+        <section class="kpis">
+          <div class="kpi destaque verde-kpi" id="kpiTempoReal">
             <div>
+              <div>
                 <span>Entreposto Selecionado</span>
-                <br>
-                <select id="fk_entreposto_end" class="select-entreposto" onchange="onchangeSelectEntreposto()">
-                </select>
-            </div>
-            <br>
+                <br />
+                <select
+                  id="fk_entreposto_end"
+                  class="select-entreposto"
+                  onchange="onchangeSelectEntreposto()"
+                ></select>
+              </div>
+              <br />
 
-            <div>
+              <div>
                 <span>Câmara Selecionada</span>
-                <br>
-                <select id="fk_camaras" class="select-camara" onchange="onchangeSelectCamara()">
-                </select>
+                <br />
+                <select
+                  id="fk_camaras"
+                  class="select-camara"
+                  onchange="onchangeSelectCamara()"
+                ></select>
+              </div>
+
+              <h1 id="temperaturaTempoReal">0°C</h1>
             </div>
 
-            <h1 id="temperaturaTempoReal">
-                0°C
-            </h1>
+            <div class="kpi-direita">
+              <div class="indicador verde-indicador"></div>
 
-        </div>
+              <div class="kpi-status verde">ONLINE</div>
+            </div>
+          </div>
 
-        <div class="kpi-direita">
-
-            <div class="indicador verde-indicador"></div>
-
-            <div class="kpi-status verde">
-                ONLINE
+          <div class="kpi verde-kpi">
+            <div class="kpi-topo">
+              <span>Câmaras Estáveis</span>
+              <div class="indicador verde-indicador"></div>
             </div>
 
-        </div>
+            <h2 id="qtdEstaveis">0</h2>
 
+            <p>Operando normalmente</p>
+          </div>
+
+          <div class="kpi amarelo-kpi">
+            <div class="kpi-topo">
+              <span>Câmaras em Atenção</span>
+              <div class="indicador amarelo-indicador"></div>
+            </div>
+
+            <h2 id="qtdAtencao">0</h2>
+
+            <p>Necessitam monitoramento</p>
+          </div>
+
+          <div class="kpi vermelho-kpi">
+            <div class="kpi-topo">
+              <span>Câmaras Críticas</span>
+              <div class="indicador vermelho-indicador"></div>
+            </div>
+
+            <h2 id="qtdCriticas">0</h2>
+
+            <p>Necessitam intervenção</p>
+          </div>
+        </section>
+
+        <section class="monitoramento">
+          <div class="grafico-area">
+            <div class="grafico-header">
+              <h3>Monitoramento da Câmara Selecionada</h3>
+            </div>
+
+            <canvas id="graficoTemperatura"></canvas>
+          </div>
+
+          <div class="painel-status">
+            <h3>Status Operacional</h3>
+
+            <div class="status-box verde" id="statusOperacional">
+              Entreposto operando normalmente
+            </div>
+            <div class="status-geral-msg">
+              Últimas temperaturas preocupantes do sistema
+              <div id="ttt" class="listaLeiturasAtuais"></div>
+            </div>
+
+            <div class="info-status">
+              <span>Última atualização</span>
+              <strong id="ultimaAtualizacao"></strong>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
-    <div class="kpi verde-kpi">
+    <script>
+      const onchangeSelectEntreposto = (e) => {
+        sessionStorage.ID_ENTREPOSTO = Number(
+          document.getElementById("fk_entreposto_end").value,
+        );
+        fetchCamarasCadastradas(sessionStorage.ID_ENTREPOSTO);
+      };
 
-        <div class="kpi-topo">
-            <span>Câmaras Estáveis</span>
-            <div class="indicador verde-indicador"></div>
-        </div>
+      const onchangeSelectCamara = (e) => {
+        sessionStorage.ID_CAMARA = Number(
+          document.getElementById("fk_camaras").value,
+        );
+      };
 
-        <h2 id="qtdEstaveis">0</h2>
+      fetchEntrepostosCadastrados();
 
-        <p>Operando normalmente</p>
+      let leituras = [];
+      let labels = [];
 
-    </div>
+      var saudacaoElemento = saudacao;
+      var horaAtualElemento = horaAtual;
+      var ultimaAtualizacaoElemento = ultimaAtualizacao;
+      var temperaturaTempoRealElemento = temperaturaTempoReal;
+      var kpiTempoRealElemento = kpiTempoReal;
+      var statusOperacionalElemento = statusOperacional;
+      var graficoElemento = graficoTemperatura;
 
-    <div class="kpi amarelo-kpi">
+      var selectCamara = document.getElementById("selectCamara");
 
-        <div class="kpi-topo">
-            <span>Câmaras em Atenção</span>
-            <div class="indicador amarelo-indicador"></div>
-        </div>
+      var qtdEstaveisElemento = document.getElementById("qtdEstaveis");
+      var qtdAtencaoElemento = document.getElementById("qtdAtencao");
+      var qtdCriticasElemento = document.getElementById("qtdCriticas");
 
-        <h2 id="qtdAtencao">0</h2>
+      var indiceCamaraSelecionada = 0;
 
-        <p>Necessitam monitoramento</p>
+      function obterStatus(temperatura) {
+        if (temperatura < 13 || temperatura > 26) {
+          return "critico";
+        }
 
-    </div>
+        if (
+          (temperatura >= 13 && temperatura <= 14) ||
+          (temperatura >= 25 && temperatura <= 26)
+        ) {
+          return "atencao";
+        }
 
-    <div class="kpi vermelho-kpi">
+        return "estavel";
+      }
 
-        <div class="kpi-topo">
-            <span>Câmaras Críticas</span>
-            <div class="indicador vermelho-indicador"></div>
-        </div>
+      function atualizarKPIs() {
+        let estaveis = 0;
+        let atencao = 0;
+        let criticas = 0;
 
-        <h2 id="qtdCriticas">0</h2>
+        for (let i = 0; i < temperaturas.length; i++) {
+          const status = obterStatus(temperaturas[i]);
 
-        <p>Necessitam intervenção</p>
-
-    </div>
-
-</section>
-
-<section class="monitoramento">
-
-<div class="grafico-area">
-
-<div class="grafico-header">
-
-    <h3>Monitoramento da Câmara Selecionada</h3>
-
-</div>
-
-<canvas id="graficoTemperatura"></canvas>
-
-</div>
-
-<div class="painel-status">
-
-<h3>Status Operacional</h3>
-
-<div class="status-box verde" id="statusOperacional">
-Entreposto operando normalmente
-</div>
-<div class="status-geral-msg">
-    Últimas temperaturas preocupantes do sistema
-    <div id="ttt" class="listaLeiturasAtuais">
-    </div>
-</div>
-
-
-<div class="info-status">
-<span>Última atualização</span>
-<strong id="ultimaAtualizacao"></strong>
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-</div>
-
-<script>
-const onchangeSelectEntreposto = (e) => { 
-    sessionStorage.ID_ENTREPOSTO = Number(document.getElementById("fk_entreposto_end").value);
-    fetchCamarasCadastradas(sessionStorage.ID_ENTREPOSTO); 
-}
-
-const onchangeSelectCamara = (e) => {
-    sessionStorage.ID_CAMARA = Number(document.getElementById("fk_camaras").value);
-}
-
-fetchEntrepostosCadastrados();
-
-let leituras = [];    
-let labels = [];    
-
-var saudacaoElemento = saudacao
-var horaAtualElemento = horaAtual
-var ultimaAtualizacaoElemento = ultimaAtualizacao
-var temperaturaTempoRealElemento = temperaturaTempoReal
-var kpiTempoRealElemento = kpiTempoReal
-var statusOperacionalElemento = statusOperacional
-var graficoElemento = graficoTemperatura
-
-var selectCamara = document.getElementById("selectCamara");
-
-var qtdEstaveisElemento = document.getElementById("qtdEstaveis");
-var qtdAtencaoElemento = document.getElementById("qtdAtencao");
-var qtdCriticasElemento = document.getElementById("qtdCriticas");
-
-var indiceCamaraSelecionada = 0;
-
-function obterStatus(temperatura){
-
-    if(temperatura < 13 || temperatura > 26){
-        return "critico";
-    }
-
-    if(
-        (temperatura >= 13 && temperatura <= 14) ||
-        (temperatura >= 25 && temperatura <= 26)
-    ){
-        return "atencao";
-    }
-
-    return "estavel";
-}
-
-function atualizarKPIs(){
-
-    let estaveis = 0;
-    let atencao = 0;
-    let criticas = 0;
-
-    for(let i = 0; i < temperaturas.length; i++){
-
-        const status = obterStatus(temperaturas[i]);
-
-        if(status === "estavel"){
+          if (status === "estavel") {
             estaveis++;
-        }
+          }
 
-        if(status === "atencao"){
+          if (status === "atencao") {
             atencao++;
-        }
+          }
 
-        if(status === "critico"){
+          if (status === "critico") {
             criticas++;
+          }
         }
-    }
 
-    qtdEstaveisElemento.innerHTML = estaveis;
-    qtdAtencaoElemento.innerHTML = atencao;
-    qtdCriticasElemento.innerHTML = criticas;
-}
+        qtdEstaveisElemento.innerHTML = estaveis;
+        qtdAtencaoElemento.innerHTML = atencao;
+        qtdCriticasElemento.innerHTML = criticas;
+      }
 
-function atualizarCamaraSelecionada(){
+      function atualizarCamaraSelecionada() {
+        const temperaturaAtual = temperaturas[indiceCamaraSelecionada];
 
-    const temperaturaAtual = temperaturas[indiceCamaraSelecionada];
+        atualizarTemperaturaArduino(temperaturaAtual);
+      }
 
-    atualizarTemperaturaArduino(
-        temperaturaAtual
-    );
-}
+      function gerarTemperatura() {
+        return Math.floor(Math.random() * (30 - 10 + 1)) + 10;
+      }
 
+      var temperaturas = [];
 
+      for (var i = 0; i < 11; i++) {
+        temperaturas.push(gerarTemperatura());
+      }
 
+      function atualizarHorario() {
+        var agora = new Date();
 
-function gerarTemperatura() {
-    return Math.floor(Math.random() * (30 - 10 + 1)) + 10;
-}
+        var hora = agora.getHours();
 
-var temperaturas = [];
+        var minuto = agora.getMinutes();
 
-for (var i = 0; i < 11; i++) {
-    temperaturas.push(gerarTemperatura());
-}
+        if (minuto < 10) {
+          minuto = "0" + minuto;
+        }
 
-function atualizarHorario(){
-    
-    var agora = new Date()
+        var saudacaoTexto = "";
 
-var hora = agora.getHours()
+        var nome = sessionStorage.NOME_USUARIO;
 
-var minuto = agora.getMinutes()
+        if (hora < 12) {
+          saudacaoTexto = "Bom dia";
+        } else if (hora < 18) {
+          saudacaoTexto = "Boa tarde";
+        } else {
+          saudacaoTexto = "Boa noite";
+        }
 
-if(minuto < 10){
-minuto = "0" + minuto
-}
+        saudacaoElemento.innerHTML = saudacaoTexto + ", " + nome;
 
-var saudacaoTexto = ""
+        horaAtualElemento.innerHTML = hora + ":" + minuto;
 
-var nome = sessionStorage.NOME_USUARIO;
+        ultimaAtualizacaoElemento.innerHTML = hora + ":" + minuto;
+      }
 
-if(hora < 12){
+      atualizarHorario();
 
-    saudacaoTexto = "Bom dia"
-    
-}else if(hora < 18){
-    
-    saudacaoTexto = "Boa tarde"
-    
-}else{
-    
-saudacaoTexto = "Boa noite"
+      setInterval(atualizarHorario, 1000);
 
-}
+      var grafico = new Chart(graficoElemento, {
+        type: "line",
 
-saudacaoElemento.innerHTML = saudacaoTexto + ", " + nome
+        data: {
+          labels: labels,
 
-horaAtualElemento.innerHTML = hora + ":" + minuto
+          datasets: [
+            {
+              data: leituras,
 
-ultimaAtualizacaoElemento.innerHTML = hora + ":" + minuto
+              borderColor: "#facc15",
 
-}
+              backgroundColor: "rgba(250,204,21,0.3)",
 
-atualizarHorario()
+              borderWidth: 3,
 
-setInterval(atualizarHorario, 1000)
+              tension: 0.4,
 
+              fill: true,
+            },
+          ],
+        },
 
-var grafico = new Chart(graficoElemento, {
+        options: {
+          responsive: true,
 
-type: "line",
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
 
-data: {
-    
-labels: labels,
+          scales: {
+            x: {
+              ticks: {
+                color: "#555",
+              },
+            },
 
-datasets: [{
-    
-    data: leituras,
-    
-    borderColor: "#facc15",
+            y: {
+              ticks: {
+                color: "#555",
+              },
+            },
+          },
+        },
+      });
 
-    backgroundColor: "rgba(250,204,21,0.3)",
+      function atualizarTemperaturaArduino(valor) {
+        temperaturaTempoRealElemento.innerHTML = valor + "°C";
 
-    borderWidth: 3,
-    
-    tension: 0.4,
+        const status = obterStatus(valor);
 
-    fill: true
-    
-}]
+        if (status === "critico") {
+          kpiTempoRealElemento.className = "kpi destaque vermelho-kpi";
 
-},
+          statusOperacionalElemento.className = "status-box vermelho";
 
-options: {
+          statusOperacionalElemento.innerHTML = "Temperatura crítica detectada";
 
-    responsive: true,
-    
-    plugins: {
+          return;
+        }
 
-legend: {
-display: false
-}
+        if (status === "atencao") {
+          kpiTempoRealElemento.className = "kpi destaque amarelo-kpi";
 
-},
+          statusOperacionalElemento.className = "status-box amarelo";
 
-scales: {
+          statusOperacionalElemento.innerHTML = "Temperatura em atenção";
 
-x: {
+          return;
+        }
 
-ticks: {
-    color: "#555"
-}
+        kpiTempoRealElemento.className = "kpi destaque verde-kpi";
 
-},
+        statusOperacionalElemento.className = "status-box verde";
 
-y: {
+        statusOperacionalElemento.innerHTML = "Entreposto operando normalmente";
+      }
 
-ticks: {
-color: "#555"
-}
+      async function atualizarLeitura() {
+        try {
+          const res = await fetchLeitura(sessionStorage.ID_CAMARA);
 
-}
-
-}
-
-}
-
-})
-
-function atualizarTemperaturaArduino(valor){
-
-    temperaturaTempoRealElemento.innerHTML = valor + "°C";
-
-    const status = obterStatus(valor);
-
-    if(status === "critico"){
-
-        kpiTempoRealElemento.className =
-        "kpi destaque vermelho-kpi";
-
-        statusOperacionalElemento.className =
-        "status-box vermelho";
-
-        statusOperacionalElemento.innerHTML =
-        "Temperatura crítica detectada";
-
-        return;
-    }
-
-    if(status === "atencao"){
-
-        kpiTempoRealElemento.className =
-        "kpi destaque amarelo-kpi";
-
-        statusOperacionalElemento.className =
-        "status-box amarelo";
-
-        statusOperacionalElemento.innerHTML =
-        "Temperatura em atenção";
-
-        return;
-    }
-
-    kpiTempoRealElemento.className =
-    "kpi destaque verde-kpi";
-
-    statusOperacionalElemento.className =
-    "status-box verde";
-
-    statusOperacionalElemento.innerHTML =
-    "Entreposto operando normalmente";
-}
-
-async function atualizarLeitura() {
-    try {
-        const res = await fetchLeitura(sessionStorage.ID_CAMARA);
-        
-        if (res && res.length > 0) {
+          if (res && res.length > 0) {
             const ultimaLeitura = res[res.length - 1];
             const valorTemperatura = parseFloat(ultimaLeitura.temperatura);
-            
+
             let valorHora = ultimaLeitura.dataHora;
-            valorHora = valorHora.split('T')[1].slice(0, -5);
+            valorHora = valorHora.split("T")[1].slice(0, -5);
 
             if (leituras.length < 7) {
-                leituras.push(valorTemperatura);
-                labels.push(valorHora);
+              leituras.push(valorTemperatura);
+              labels.push(valorHora);
             } else {
-                leituras.shift();
-                labels.shift();
-                leituras.push(valorTemperatura);
-                labels.push(valorHora);
+              leituras.shift();
+              labels.shift();
+              leituras.push(valorTemperatura);
+              labels.push(valorHora);
             }
 
             if (grafico && grafico.data) {
-                if (grafico.data.datasets && grafico.data.datasets.length > 0) {
-                    grafico.data.datasets[0].data = leituras;
-                }
-                grafico.data.labels = labels; 
-                grafico.update();
+              if (grafico.data.datasets && grafico.data.datasets.length > 0) {
+                grafico.data.datasets[0].data = leituras;
+              }
+              grafico.data.labels = labels;
+              grafico.update();
             }
-            
+
             temperaturas[0] = valorTemperatura;
 
-if(indiceCamaraSelecionada === 0){
-    atualizarTemperaturaArduino(valorTemperatura);
-}
+            if (indiceCamaraSelecionada === 0) {
+              atualizarTemperaturaArduino(valorTemperatura);
+            }
 
-atualizarKPIs();
+            atualizarKPIs();
 
-statusGeralCamaras();
-            
-        } else {
+            statusGeralCamaras();
+          } else {
             console.warn("A API respondeu, mas a lista de dados veio vazia.");
+          }
+        } catch (err) {
+          console.error("Erro no processamento dos dados:", err);
         }
-    } catch (err) {
-        console.error('Erro no processamento dos dados:', err);
-    }
-}
+      }
 
-setInterval(atualizarLeitura, 3000);
+      setInterval(atualizarLeitura, 3000);
 
-/*
+      /*
 var msgPrincipalElemento = msgPrincipal;
 var msgSubtextoElemento = msgSubtexto;
 //let temperaturasTeste = [11, 28, 20, 21, 30, 17, 22, 9, 18, 14];
@@ -951,77 +856,66 @@ function statusGeralCamaras(){
 }
     */
 
-    function listaAlertas(){
+      function listaAlertas() {
         let vetorMockado = [
-            {
-                msg: 'Alerta de temperatura: 25ºC - Temperatura alarmantemente alta',
-                dtHora: '2026-06-08 15:00:00'
-            }, 
-            {
-                msg: 'Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa',
-                dtHora: '2026-06-08 14:00:00'
-            }, 
-            {
-                msg: 'Alerta de temperatura: 25ºC - Temperatura criticamente baixa ',
-                dtHora: '2026-06-08 13:00:00'
-            }, 
-            {
-                msg: 'Alerta de temperatura: 25ºC - Temperatura criticamente alta',
-                dtHora: '2026-06-08 12:00:00'
-            }, 
-            {
-                msg: 'Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa',
-                dtHora: '2026-06-08 11:00:00'
-            }
+          {
+            msg: "Alerta de temperatura: 25ºC - Temperatura alarmantemente alta",
+            dtHora: "2026-06-08 15:00:00",
+          },
+          {
+            msg: "Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa",
+            dtHora: "2026-06-08 14:00:00",
+          },
+          {
+            msg: "Alerta de temperatura: 25ºC - Temperatura criticamente baixa ",
+            dtHora: "2026-06-08 13:00:00",
+          },
+          {
+            msg: "Alerta de temperatura: 25ºC - Temperatura criticamente alta",
+            dtHora: "2026-06-08 12:00:00",
+          },
+          {
+            msg: "Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa",
+            dtHora: "2026-06-08 11:00:00",
+          },
         ];
 
+        let cardLeituraAtualMsg = "";
+        let cardLeituraAtualDtHora = "";
+        let mensagem = "";
+        for (let i = 0; i < vetorMockado.length; i++) {
+          let leituraAtual = vetorMockado[i];
+          cardLeituraAtualMsg = leituraAtual.msg;
+          cardLeituraAtualDtHora = leituraAtual.dtHora;
 
-        let cardLeituraAtualMsg = '';
-        let cardLeituraAtualDtHora = '';
-        let mensagem = '';
-        for(let i = 0; i < vetorMockado.length; i++){
-            let leituraAtual = vetorMockado[i];
-                cardLeituraAtualMsg = leituraAtual.msg;
-                cardLeituraAtualDtHora = leituraAtual.dtHora;
-                
-
-                if (cardLeituraAtualMsg.includes('alarmantemente')){
-                    mensagem += `
+          if (cardLeituraAtualMsg.includes("alarmantemente")) {
+            mensagem += `
                                 <div class="cardLeituraAtual" style="background-color:#fef3c7; color:#b45309">
                                     <span class="msg">${cardLeituraAtualMsg}</span>
                                     <span class="dtHora">${cardLeituraAtualDtHora}</span>
                                 </div>
                     `;
-                } else if (cardLeituraAtualMsg.includes('criticamente')){
-                    mensagem += `
+          } else if (cardLeituraAtualMsg.includes("criticamente")) {
+            mensagem += `
                                 <div class="cardLeituraAtual" style="background-color:#fee2e2; color:#b91c1c">
                                     <span class="msg">${cardLeituraAtualMsg}</span>
                                     <span class="dtHora">${cardLeituraAtualDtHora}</span>
                                 </div>
-                    `;                    
-                }
-
+                    `;
+          }
         }
 
         ttt.innerHTML = mensagem;
         //console.log(cardLeituraAtualDtHora, cardLeituraAtualMsg);
+      }
 
+      listaAlertas();
+      atualizarKPIs();
 
+      atualizarCamaraSelecionada();
 
-
-    }
-
-listaAlertas();
-atualizarKPIs();
-
-atualizarCamaraSelecionada();
-
-statusGeralCamaras();
-console.log(temperaturas);
-
-
-
-</script>
-
-</body>
+      statusGeralCamaras();
+      console.log(temperaturas);
+    </script>
+  </body>
 </html>

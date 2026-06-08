@@ -11,7 +11,7 @@ const fetchAutenticarUsuario = () => {
       res.json().then((json) => {
         sessionStorage.NOME_USUARIO = json.nome;
         sessionStorage.EMAIL_USUARIO = json.email;
-        sessionStorage.ID_EMPRESA = json.fkEmpresa
+        sessionStorage.ID_EMPRESA = json.fkEmpresa;
 
         alert("Login realizado com sucesso!");
         window.location.href = "/";
@@ -35,53 +35,55 @@ const fetchCadastrarUsuario = () => {
     }),
   }).then((res) => {
     if (res.ok) {
-      window.location.href = "login.html"
+      window.location.href = "login.html";
       alert("Conta criada com sucesso!");
     } else {
-        alert("Erro ao efetuar cadastro!a");
-      }
-    });
-  }
-  const fetchCadastrarEmpresa = () => {
-    fetch("http://localhost:8080/empresas/cadastrar", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        nome: nome_empresa.value,
-        cnpj: cnpj_empresa.value,
-      }),
-    }).then((res) => {
-      if(res.ok) {
-        res.json().then((response ) => {
-          sessionStorage.ID_EMPRESA = response.insertId
-          alert(`Empresa cadastrada com sucesso!\n Id da Empresa: ${response.insertId}`)
-        } 
-        )
-      } else {
-        alert("Erro ao cadastrar empresa!")
-      }
-    })
-  };
+      alert("Erro ao efetuar cadastro!a");
+    }
+  });
+};
+const fetchCadastrarEmpresa = () => {
+  fetch("http://localhost:8080/empresas/cadastrar", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      nome: nome_empresa.value,
+      cnpj: cnpj_empresa.value,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      res.json().then((response) => {
+        sessionStorage.ID_EMPRESA = response.insertId;
+        alert(
+          `Empresa cadastrada com sucesso!\n Id da Empresa: ${response.insertId}`,
+        );
+      });
+    } else {
+      alert("Erro ao cadastrar empresa!");
+    }
+  });
+};
 
-  const fetchCadastrarEntreposto = () => {
-    fetch("http://localhost:8080/entrepostos/cadastrar", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        nome: nome_entreposto.value,
-        fkEmpresa: Number(sessionStorage.ID_EMPRESA),
-      }),
-    }).then((res) => {
-      if(res.ok) {
-        res.json().then((response) => {
-          alert(`Entreposto cadastrado com sucesso!\n Id do Entreposto: ${response.insertId}`)
-
-        })
-      } else {
-        alert("Erro ao cadastrar entreposto!")
-      }
-    })
-  };
+const fetchCadastrarEntreposto = () => {
+  fetch("http://localhost:8080/entrepostos/cadastrar", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      nome: nome_entreposto.value,
+      fkEmpresa: Number(sessionStorage.ID_EMPRESA),
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      res.json().then((response) => {
+        alert(
+          `Entreposto cadastrado com sucesso!\n Id do Entreposto: ${response.insertId}`,
+        );
+      });
+    } else {
+      alert("Erro ao cadastrar entreposto!");
+    }
+  });
+};
 
 const fetchCadastrarCamara = () => {
   fetch("http://localhost:8080/camaras/cadastrar", {
@@ -93,12 +95,12 @@ const fetchCadastrarCamara = () => {
       fkEntreposto: Number(fk_entreposto.value),
     }),
   }).then((res) => {
-    if(res.ok) {
-        alert("Câmara cadastrada com sucesso!")
+    if (res.ok) {
+      alert("Câmara cadastrada com sucesso!");
     } else {
-      alert("Erro ao cadastrar câmara!")
+      alert("Erro ao cadastrar câmara!");
     }
-  })
+  });
 };
 
 const fetchCadastrarEndereco = () => {
@@ -117,12 +119,12 @@ const fetchCadastrarEndereco = () => {
       fkEntreposto: Number(fk_entreposto_end.value),
     }),
   }).then((res) => {
-    if(res.ok) {
-        alert("Endereco cadastrado com sucesso!")
+    if (res.ok) {
+      alert("Endereco cadastrado com sucesso!");
     } else {
-      alert("Erro ao cadastrar endereco!")
+      alert("Erro ao cadastrar endereco!");
     }
-  })
+  });
 };
 
 const fetchSuporte = (texto) => {
@@ -130,85 +132,84 @@ const fetchSuporte = (texto) => {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
-      pergunta: texto
-    })
+      pergunta: texto,
+    }),
   }).then((res) => {
     if (res.ok) {
       res.json().then((res) => {
-        adicionarMensagem(res.resposta, 'ia')
-      })
+        adicionarMensagem(res.resposta, "ia");
+      });
     } else {
-      adicionarMensagem('Falha na conexao com BobIa...', 'ia')
+      adicionarMensagem("Falha na conexao com BobIa...", "ia");
     }
-  })
-}
+  });
+};
 
 const fetchLeitura = (a) => {
   return fetch("http://localhost:8080/leituras/listar", {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
-      fkSensor: a
-    })
+      fkSensor: a,
+    }),
   }).then((res) => {
     if (res.ok) {
-        return res.json()
-      }
-    })
-  }
+      return res.json();
+    }
+  });
+};
 
-  const fetchEntrepostosCadastrados = () => {
-    return fetch("http://localhost:8080/entrepostos/listar", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        fkEmpresa: Number(sessionStorage.ID_EMPRESA)
-      })
-    }).then((res) => {
-      if (res.ok) {
-         res.json().then((res) => {
-          let select = document.getElementById('fk_entreposto_end')
-          select.innerHTML = `<option value="" disabled selected>Selecione um entreposto</option>`
-          for(let i = 0; i < res.length; i++) {
-            let option = `<option value="${res[i].idEntreposto}">${res[i].nome}</option>`
-            select.innerHTML += option
-          }})
-        }})
-      }
-
-
-  const fetchCamarasCadastradas = (a) => {
-    return fetch("http://localhost:8080/camaras/listar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fkEntreposto: a, 
-      })
-    }).then((res) => {
-      if (res.ok) {
-         res.json().then((res) => {
-          let select = document.getElementById('fk_camaras')
-          select.innerHTML = `<option value="" disabled selected>Selecione uma Camara</option>`
-          for(let i = 0; i < res.length; i++) {
-            let option = `<option value="${res[i].idCamara}">${res[i].nome}</option>`
-            select.innerHTML += option
-          }})
-        }})
-      } 
-
-      const fetchAlertas = () => {
-        return fetch("http://localhost:8080/alertas/listar", {
-          method: "GET",
-          headers: { "Content-type": "application/json" }
-        }).then((res) => {
-          if (res.ok) {
-              res.json().then((res) => {
-                return console.log(res)
-                }
-          )}
-          })
+const fetchEntrepostosCadastrados = () => {
+  return fetch("http://localhost:8080/entrepostos/listar", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      fkEmpresa: Number(sessionStorage.ID_EMPRESA),
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      res.json().then((res) => {
+        let select = document.getElementById("fk_entreposto_end");
+        select.innerHTML = `<option value="" disabled selected>Selecione um entreposto</option>`;
+        for (let i = 0; i < res.length; i++) {
+          let option = `<option value="${res[i].idEntreposto}">${res[i].nome}</option>`;
+          select.innerHTML += option;
         }
-    
+      });
+    }
+  });
+};
 
+const fetchCamarasCadastradas = (a) => {
+  return fetch("http://localhost:8080/camaras/listar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fkEntreposto: a,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      res.json().then((res) => {
+        let select = document.getElementById("fk_camaras");
+        select.innerHTML = `<option value="" disabled selected>Selecione uma Camara</option>`;
+        for (let i = 0; i < res.length; i++) {
+          let option = `<option value="${res[i].idCamara}">${res[i].nome}</option>`;
+          select.innerHTML += option;
+        }
+      });
+    }
+  });
+};
 
-
+const fetchAlertas = () => {
+  return fetch("http://localhost:8080/alertas/listar", {
+    method: "GET",
+    headers: { "Content-type": "application/json" },
+  }).then((res) => {
+    if (res.ok) {
+      res.json().then((res) => {
+        return console.log(res);
+      });
+    }
+  });
+};
