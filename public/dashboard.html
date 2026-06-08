@@ -848,7 +848,7 @@ setInterval(atualizarLeitura, 3000);
 
 var msgPrincipalElemento = msgPrincipal;
 var msgSubtextoElemento = msgSubtexto;
-let temperaturasTeste = [11, 28, 20, 21, 30, 17, 22, 9, 18, 14];
+//let temperaturasTeste = [11, 28, 20, 21, 30, 17, 22, 9, 18, 14];
 function statusGeralCamaras(){
     var quantidadeCamaras = temperaturas.length;    
     var camarasVermelhas = 0;
@@ -863,7 +863,7 @@ function statusGeralCamaras(){
     let classeMensagem = "";
 
     for (let i = 0; i < quantidadeCamaras; i++){
-        let camaraAtual = temperaturasTeste[i];
+        let camaraAtual = temperaturas[i];
         if (camaraAtual < 13 || camaraAtual > 26){
             camarasVermelhas++;
             nomesCamarasVermelhas += `${i+1} `;
