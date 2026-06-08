@@ -69,7 +69,7 @@ const fetchCadastrarUsuario = () => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         nome: nome_entreposto.value,
-        fkEmpresa: sessionStorage.ID_EMPRESA,
+        fkEmpresa: Number(sessionStorage.ID_EMPRESA),
       }),
     }).then((res) => {
       if(res.ok) {
@@ -113,7 +113,7 @@ const fetchCadastrarEndereco = () => {
       cidade: cidade_endereco.value,
       complemento: complemento_endereco.value,
       siglaEstado: estado_endereco.value,
-      fkEmpresa: sessionStorage.ID_EMPRESA,
+      fkEmpresa: Number(sessionStorage.ID_EMPRESA),
       fkEntreposto: Number(fk_entreposto_end.value),
     }),
   }).then((res) => {
