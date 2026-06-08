@@ -1,5 +1,5 @@
 const fetchAutenticarUsuario = () => {
-  fetch("http://localhost:8080/usuarios/autenticar", {
+  fetch("http://10.18.33.30:8080/usuarios/autenticar", {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
