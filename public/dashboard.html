@@ -111,10 +111,10 @@ border-radius: 10px;
 }
 
 .kpis{
-display: grid;
-grid-template-columns: repeat(5, 1fr);
-gap: 20px;
-margin-bottom: 30px;
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1fr;
+gap:20px;
+margin-bottom:30px;
 }
 
 .kpi{
@@ -211,34 +211,6 @@ font-size: 12px;
 font-weight: bold;
 }
 
-.camaras-grid{
-width: 65%;    
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 20px;
-margin-bottom: 30px;
-}
-
-.camara-card{
-background-color: white;
-border: 2px solid #222;
-border-radius: 18px;
-padding: 20px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.camara-card span{
-color: #555;
-}
-
-.camara-card h2{
-color: #222;
-margin-top: 8px;
-font-size: 30px;
-}
-
 .badge{
 padding: 8px 12px;
 border-radius: 10px;
@@ -262,10 +234,11 @@ color: #b91c1c;
 }
 
 .monitoramento{
-display: grid;
-grid-template-columns: 2fr 1fr;
-gap: 20px;
-margin-bottom: 30px;
+display:grid;
+grid-template-columns:3fr 1.2fr;
+gap:20px;
+margin-bottom:30px;
+align-items:stretch;
 }
 
 .grafico-area,
@@ -291,12 +264,15 @@ border: 1px solid #ccc;
 background-color: white;
 color: #222;
 }
+.select-camara{
+margin-top:12px;
+width:100%;
+}
 
 .painel-status{
-display: flex;
-flex-direction: column;
-gap: 20px;
-margin-top: -673px
+display:flex;
+flex-direction:column;
+gap:20px;
 }
 
 .status-box{
@@ -391,14 +367,18 @@ align-items: center;
 @media screen and (max-width: 1400px){
 
 .kpis{
-grid-template-columns: repeat(2, 1fr);
-}
-
-.camaras-grid{
-grid-template-columns: repeat(2, 1fr);
+grid-template-columns: 1fr 1fr;
 }
 
 .monitoramento{
+grid-template-columns: 1fr;
+}
+
+}
+
+@media screen and (max-width: 900px){
+
+.kpis{
 grid-template-columns: 1fr;
 }
 
@@ -454,67 +434,84 @@ Sistema operacional
 
 <section class="kpis">
 
-<div class="kpi destaque verde-kpi" id="kpiTempoReal">
+    <div class="kpi destaque verde-kpi" id="kpiTempoReal">
 
-<div>
+        <div>
 
-<span>Câmara principal</span>
+            <span>Câmara Selecionada</span>
 
-<h1 id="temperaturaTempoReal">
-0°C
-</h1>
+            <select id="selectCamara" class="select-camara">
+                <option value="0">Câmara Principal</option>
+                <option value="1">Câmara 1</option>
+                <option value="2">Câmara 2</option>
+                <option value="3">Câmara 3</option>
+                <option value="4">Câmara 4</option>
+                <option value="5">Câmara 5</option>
+                <option value="6">Câmara 6</option>
+                <option value="7">Câmara 7</option>
+                <option value="8">Câmara 8</option>
+                <option value="9">Câmara 9</option>
+                <option value="10">Câmara 10</option>
+            </select>
 
-</div>
+            <h1 id="temperaturaTempoReal">
+                0°C
+            </h1>
 
-<div class="kpi-direita">
+        </div>
 
-<div class="indicador verde-indicador"></div>
+        <div class="kpi-direita">
 
-<div class="kpi-status verde">
-ONLINE
-</div>
+            <div class="indicador verde-indicador"></div>
 
-</div>
+            <div class="kpi-status verde">
+                ONLINE
+            </div>
 
-</div>
+        </div>
 
-<div class="kpi verde-kpi">
+    </div>
 
-<div class="kpi-topo">
+    <div class="kpi verde-kpi">
 
-<span>Câmaras estáveis</span>
+        <div class="kpi-topo">
+            <span>Câmaras Estáveis</span>
+            <div class="indicador verde-indicador"></div>
+        </div>
 
-<div class="indicador verde-indicador"></div>
+        <h2 id="qtdEstaveis">0</h2>
 
-</div>
+        <p>Operando normalmente</p>
 
-<h2>8</h2>
+    </div>
 
-<p>Operando normalmente</p>
+    <div class="kpi amarelo-kpi">
 
-</div>
+        <div class="kpi-topo">
+            <span>Câmaras em Atenção</span>
+            <div class="indicador amarelo-indicador"></div>
+        </div>
 
-<div class="kpi amarelo-kpi">
+        <h2 id="qtdAtencao">0</h2>
 
-<div class="kpi-topo">
+        <p>Necessitam monitoramento</p>
 
-<span>Câmaras em atenção</span>
+    </div>
 
-<div class="indicador amarelo-indicador"></div>
+    <div class="kpi vermelho-kpi">
 
-</div>
+        <div class="kpi-topo">
+            <span>Câmaras Críticas</span>
+            <div class="indicador vermelho-indicador"></div>
+        </div>
 
-<h2>2</h2>
+        <h2 id="qtdCriticas">0</h2>
 
-<p>Oscilação identificada</p>
+        <p>Necessitam intervenção</p>
 
-</div>
-
-
+    </div>
 
 </section>
-
-<section class="camaras-grid" id="cardsCamaras"></section>
 
 <section class="monitoramento">
 
@@ -522,15 +519,7 @@ ONLINE
 
 <div class="grafico-header">
 
-<h3>Monitoramento da Câmara</h3>
-
-<select>
-<option>Câmara 1</option>
-<option>Câmara 2</option>
-<option>Câmara 3</option>
-<option>Câmara 4</option>
-<option>Câmara 5</option>
-</select>
+    <h3>Monitoramento da Câmara Selecionada</h3>
 
 </div>
 
@@ -572,11 +561,79 @@ let labels = [];
 var saudacaoElemento = saudacao
 var horaAtualElemento = horaAtual
 var ultimaAtualizacaoElemento = ultimaAtualizacao
-var cardsCamarasElemento = cardsCamaras
 var temperaturaTempoRealElemento = temperaturaTempoReal
 var kpiTempoRealElemento = kpiTempoReal
 var statusOperacionalElemento = statusOperacional
 var graficoElemento = graficoTemperatura
+
+var selectCamara = document.getElementById("selectCamara");
+
+var qtdEstaveisElemento = document.getElementById("qtdEstaveis");
+var qtdAtencaoElemento = document.getElementById("qtdAtencao");
+var qtdCriticasElemento = document.getElementById("qtdCriticas");
+
+var indiceCamaraSelecionada = 0;
+
+function obterStatus(temperatura){
+
+    if(temperatura < 13 || temperatura > 26){
+        return "critico";
+    }
+
+    if(
+        (temperatura >= 13 && temperatura <= 14) ||
+        (temperatura >= 25 && temperatura <= 26)
+    ){
+        return "atencao";
+    }
+
+    return "estavel";
+}
+
+function atualizarKPIs(){
+
+    let estaveis = 0;
+    let atencao = 0;
+    let criticas = 0;
+
+    for(let i = 0; i < temperaturas.length; i++){
+
+        const status = obterStatus(temperaturas[i]);
+
+        if(status === "estavel"){
+            estaveis++;
+        }
+
+        if(status === "atencao"){
+            atencao++;
+        }
+
+        if(status === "critico"){
+            criticas++;
+        }
+    }
+
+    qtdEstaveisElemento.innerHTML = estaveis;
+    qtdAtencaoElemento.innerHTML = atencao;
+    qtdCriticasElemento.innerHTML = criticas;
+}
+
+function atualizarCamaraSelecionada(){
+
+    const temperaturaAtual = temperaturas[indiceCamaraSelecionada];
+
+    atualizarTemperaturaArduino(
+        temperaturaAtual
+    );
+}
+
+selectCamara.addEventListener("change", function(){
+
+    indiceCamaraSelecionada = Number(this.value);
+
+    atualizarCamaraSelecionada();
+
+});
 
 function gerarTemperatura() {
     return Math.floor(Math.random() * (30 - 10 + 1)) + 10;
@@ -584,7 +641,7 @@ function gerarTemperatura() {
 
 var temperaturas = [];
 
-for (var i = 0; i < 10; i++) {
+for (var i = 0; i < 11; i++) {
     temperaturas.push(gerarTemperatura());
 }
 
@@ -630,74 +687,6 @@ atualizarHorario()
 
 setInterval(atualizarHorario, 1000)
 
-function renderizarCamaras(){
-    
-    cardsCamarasElemento.innerHTML = ""
-    
-    for(var i = 0; i < temperaturas.length; i++){
-
-        var temperatura = temperaturas[i]
-        
-        var status = ""
-        var classe = ""
-        
-       if(temperatura < 13 || temperatura > 26){
-
-    status = "Crítico";
-    classe = "critico";
-
-}else if(
-(temperatura >= 13 && temperatura <= 14) ||
-(temperatura >= 25 && temperatura <= 26)
-){
-
-    status = "Atenção";
-    classe = "alerta";
-
-}else{
-
-    status = "Estável";
-    classe = "estavel";
-
-}
-
-cardsCamarasElemento.innerHTML += `
-
-<div class="camara-card">
-    
-    <div>
-        
-        <span>Câmara ${i + 1}</span>
-        
-                       <h2>${temperatura}°C</h2>
-                       
-                   </div>
-
-                   <div class="badge ${classe}">
-                    ${status}
-                   </div>
-                   
-                   </div>
-                   
-           `
-}
-
-}
-
-function atualizarCamarasDinamicas() {
-
-    temperaturas = [];
-
-    for (var i = 0; i < 10; i++) {
-        temperaturas.push(gerarTemperatura());
-    }
-
-    renderizarCamaras();
-    statusGeralCamaras();
-}
-
-renderizarCamaras();
-setInterval(atualizarCamarasDinamicas, 2000);
 
 var grafico = new Chart(graficoElemento, {
 
@@ -762,47 +751,48 @@ color: "#555"
 })
 
 function atualizarTemperaturaArduino(valor){
-    
-    temperaturaTempoRealElemento.innerHTML = valor + "°C"
-    
-  if(valor < 13 || valor > 26){
 
-    kpiTempoRealElemento.className = "kpi destaque vermelho-kpi";
+    temperaturaTempoRealElemento.innerHTML = valor + "°C";
 
-    statusOperacionalElemento.className = "status-box vermelho";
+    const status = obterStatus(valor);
 
-    statusOperacionalElemento.innerHTML = "Temperatura crítica detectada";
+    if(status === "critico"){
 
-}else if(
-(valor >= 13 && valor <= 14) ||
-(valor >= 25 && valor <= 26)
-){
+        kpiTempoRealElemento.className =
+        "kpi destaque vermelho-kpi";
 
-    kpiTempoRealElemento.className = "kpi destaque amarelo-kpi";
+        statusOperacionalElemento.className =
+        "status-box vermelho";
 
-    statusOperacionalElemento.className = "status-box amarelo";
+        statusOperacionalElemento.innerHTML =
+        "Temperatura crítica detectada";
 
-    statusOperacionalElemento.innerHTML = "Temperatura em atenção";
+        return;
+    }
 
-}else{
+    if(status === "atencao"){
 
-    kpiTempoRealElemento.className = "kpi destaque verde-kpi";
+        kpiTempoRealElemento.className =
+        "kpi destaque amarelo-kpi";
 
-    statusOperacionalElemento.className = "status-box verde";
+        statusOperacionalElemento.className =
+        "status-box amarelo";
 
-    statusOperacionalElemento.innerHTML = "Entreposto operando normalmente";
+        statusOperacionalElemento.innerHTML =
+        "Temperatura em atenção";
 
+        return;
+    }
+
+    kpiTempoRealElemento.className =
+    "kpi destaque verde-kpi";
+
+    statusOperacionalElemento.className =
+    "status-box verde";
+
+    statusOperacionalElemento.innerHTML =
+    "Entreposto operando normalmente";
 }
-
-}
-
-// setInterval(function(){
-    
-// var temperaturaMock = (Math.random() * (22 - 14) + 14).toFixed(1)
-
-// atualizarTemperaturaArduino(temperaturaMock)
-
-// }, 3000)
 
 async function atualizarLeitura() {
     try {
@@ -833,7 +823,15 @@ async function atualizarLeitura() {
                 grafico.update();
             }
             
-            atualizarTemperaturaArduino(valorTemperatura);
+            temperaturas[0] = valorTemperatura;
+
+if(indiceCamaraSelecionada === 0){
+    atualizarTemperaturaArduino(valorTemperatura);
+}
+
+atualizarKPIs();
+
+statusGeralCamaras();
             
         } else {
             console.warn("A API respondeu, mas a lista de dados veio vazia.");
@@ -917,7 +915,11 @@ function statusGeralCamaras(){
 
 
 }
+atualizarKPIs();
 
+atualizarCamaraSelecionada();
+
+statusGeralCamaras();
 console.log(temperaturas);
 
 
@@ -925,5 +927,4 @@ console.log(temperaturas);
 </script>
 
 </body>
-</html>
 </html>
