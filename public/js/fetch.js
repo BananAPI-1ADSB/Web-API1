@@ -92,7 +92,7 @@ const fetchCadastrarCamara = () => {
     body: JSON.stringify({
       nome: nome_camara.value,
       tipo: tipo_camara.value,
-      fkEntreposto: Number(fk_entreposto.value),
+      fkEntreposto: Number(fk_entreposto_end.value),
     }),
   }).then((res) => {
     if (res.ok) {

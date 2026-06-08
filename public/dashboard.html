@@ -529,20 +529,27 @@
     </div>
 
     <script>
-      const onchangeSelectEntreposto = (e) => {
+        
+        window.onload = function() {
+            localStorage.removeItem("ID_CAMARA");
+            localStorage.removeItem("ID_ENTREPOSTO");
+            fetchEntrepostosCadastrados();
+         }
+
+      const onchangeSelectEntreposto = () => {
         sessionStorage.ID_ENTREPOSTO = Number(
           document.getElementById("fk_entreposto_end").value,
         );
         fetchCamarasCadastradas(sessionStorage.ID_ENTREPOSTO);
       };
 
-      const onchangeSelectCamara = (e) => {
-        sessionStorage.ID_CAMARA = Number(
-          document.getElementById("fk_camaras").value,
-        );
+      const onchangeSelectCamara = () => {
+          sessionStorage.ID_CAMARA = Number(
+              document.getElementById("fk_camaras").value,
+            );
+            setInterval(atualizarLeitura, 3000);
       };
 
-      fetchEntrepostosCadastrados();
 
       let leituras = [];
       let labels = [];
@@ -607,7 +614,6 @@
       function atualizarCamaraSelecionada() {
         const temperaturaAtual = temperaturas[indiceCamaraSelecionada];
 
-        atualizarTemperaturaArduino(temperaturaAtual);
       }
 
       function gerarTemperatura() {
@@ -771,7 +777,7 @@
 
             atualizarKPIs();
 
-            statusGeralCamaras();
+            // statusGeralCamaras();
           } else {
             console.warn("A API respondeu, mas a lista de dados veio vazia.");
           }
@@ -780,7 +786,6 @@
         }
       }
 
-      setInterval(atualizarLeitura, 3000);
 
       /*
 var msgPrincipalElemento = msgPrincipal;
@@ -914,8 +919,7 @@ function statusGeralCamaras(){
 
       atualizarCamaraSelecionada();
 
-      statusGeralCamaras();
-      console.log(temperaturas);
+    //   statusGeralCamaras();
     </script>
   </body>
 </html>
