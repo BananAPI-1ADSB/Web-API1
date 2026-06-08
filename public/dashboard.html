@@ -529,12 +529,11 @@
     </div>
 
     <script>
-        
-        window.onload = function() {
-            localStorage.removeItem("ID_CAMARA");
-            localStorage.removeItem("ID_ENTREPOSTO");
-            fetchEntrepostosCadastrados();
-         }
+      window.onload = function () {
+        localStorage.removeItem("ID_CAMARA");
+        localStorage.removeItem("ID_ENTREPOSTO");
+        fetchEntrepostosCadastrados();
+      };
 
       const onchangeSelectEntreposto = () => {
         sessionStorage.ID_ENTREPOSTO = Number(
@@ -544,12 +543,11 @@
       };
 
       const onchangeSelectCamara = () => {
-          sessionStorage.ID_CAMARA = Number(
-              document.getElementById("fk_camaras").value,
-            );
-            setInterval(atualizarLeitura, 3000);
+        sessionStorage.ID_CAMARA = Number(
+          document.getElementById("fk_camaras").value,
+        );
+        setInterval(atualizarLeitura, 3000);
       };
-
 
       let leituras = [];
       let labels = [];
@@ -613,7 +611,6 @@
 
       function atualizarCamaraSelecionada() {
         const temperaturaAtual = temperaturas[indiceCamaraSelecionada];
-
       }
 
       function gerarTemperatura() {
@@ -658,7 +655,7 @@
 
       atualizarHorario();
 
-      setInterval(atualizarHorario, 1000);
+      setInterval(atualizarHorario, 5000);
 
       var grafico = new Chart(graficoElemento, {
         type: "line",
@@ -786,7 +783,6 @@
         }
       }
 
-
       /*
 var msgPrincipalElemento = msgPrincipal;
 var msgSubtextoElemento = msgSubtexto;
@@ -903,7 +899,7 @@ function statusGeralCamaras(){
 
       atualizarCamaraSelecionada();
 
-    //   statusGeralCamaras();
+      //   statusGeralCamaras();
     </script>
   </body>
 </html>
