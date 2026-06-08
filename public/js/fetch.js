@@ -205,11 +205,5 @@ const fetchAlertas = () => {
   return fetch("http://localhost:8080/alertas/listar", {
     method: "GET",
     headers: { "Content-type": "application/json" },
-  }).then((res) => {
-    if (res.ok) {
-      res.json().then((res) => {
-        return console.log(res);
-      });
-    }
   });
 };

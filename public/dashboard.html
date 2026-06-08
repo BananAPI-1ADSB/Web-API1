@@ -856,57 +856,41 @@ function statusGeralCamaras(){
 }
     */
 
-      function listaAlertas() {
-        let vetorMockado = [
-          {
-            msg: "Alerta de temperatura: 25ºC - Temperatura alarmantemente alta",
-            dtHora: "2026-06-08 15:00:00",
-          },
-          {
-            msg: "Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa",
-            dtHora: "2026-06-08 14:00:00",
-          },
-          {
-            msg: "Alerta de temperatura: 25ºC - Temperatura criticamente baixa ",
-            dtHora: "2026-06-08 13:00:00",
-          },
-          {
-            msg: "Alerta de temperatura: 25ºC - Temperatura criticamente alta",
-            dtHora: "2026-06-08 12:00:00",
-          },
-          {
-            msg: "Alerta de temperatura: 25ºC - Temperatura alarmantemente baixa",
-            dtHora: "2026-06-08 11:00:00",
-          },
-        ];
+      setInterval(listarAlertas, 5000);
 
-        let cardLeituraAtualMsg = "";
-        let cardLeituraAtualDtHora = "";
-        let mensagem = "";
-        for (let i = 0; i < vetorMockado.length; i++) {
-          let leituraAtual = vetorMockado[i];
-          cardLeituraAtualMsg = leituraAtual.msg;
-          cardLeituraAtualDtHora = leituraAtual.dtHora;
+      function listarAlertas() {
+        fetchAlertas().then((res) => {
+          if (res.ok) {
+            res.json().then((alertas) => {
+              let cardLeituraAtualMsg = "";
+              let cardLeituraAtualDtHora = "";
+              let mensagem = "";
+              for (let i = 0; i < alertas.length; i++) {
+                let leituraAtual = alertas[i];
+                cardLeituraAtualMsg = leituraAtual.mensagem;
+                cardLeituraAtualDtHora = leituraAtual.dataHora;
 
-          if (cardLeituraAtualMsg.includes("alarmantemente")) {
-            mensagem += `
+                if (cardLeituraAtualMsg.includes("alarmantemente")) {
+                  mensagem += `
                                 <div class="cardLeituraAtual" style="background-color:#fef3c7; color:#b45309">
                                     <span class="msg">${cardLeituraAtualMsg}</span>
                                     <span class="dtHora">${cardLeituraAtualDtHora}</span>
                                 </div>
                     `;
-          } else if (cardLeituraAtualMsg.includes("criticamente")) {
-            mensagem += `
+                } else if (cardLeituraAtualMsg.includes("criticamente")) {
+                  mensagem += `
                                 <div class="cardLeituraAtual" style="background-color:#fee2e2; color:#b91c1c">
                                     <span class="msg">${cardLeituraAtualMsg}</span>
                                     <span class="dtHora">${cardLeituraAtualDtHora}</span>
                                 </div>
                     `;
-          }
-        }
+                }
+              }
 
-        ttt.innerHTML = mensagem;
-        //console.log(cardLeituraAtualDtHora, cardLeituraAtualMsg);
+              ttt.innerHTML = mensagem;
+            });
+          }
+        });
       }
 
       listaAlertas();
