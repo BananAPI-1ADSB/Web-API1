@@ -127,6 +127,25 @@ const fetchCadastrarEndereco = () => {
   });
 };
 
+const fetchCadastrarSensor = () => {
+  fetch("http://localhost:8080/sensores/cadastrar", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      modelo: modelo_sensor.value,
+      status: status_sensor.value,
+      pontoRef: ponto_referencia.value,
+      fkCamara: fk_camara.value,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      alert("Sensor cadastrado com sucesso!");
+    } else {
+      alert("Erro ao cadastrar sensor!");
+    }
+  });
+};
+
 const fetchSuporte = (texto) => {
   return fetch("http://localhost:8080/bobia/perguntar", {
     method: "POST",
