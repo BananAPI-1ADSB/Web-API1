@@ -51,14 +51,14 @@
             </div>
 
             <div class="campo">
-              <label for="fk_camera">ID da Câmera:</label>
+              <label for="fk_camara">ID da Câmara:</label>
               <input
-                id="fk_camera"
+                id="fk_camara"
                 type="number"
-                placeholder="Informe o ID da câmera vinculada"
-                oninput="limparErro('fk_camera')"
+                placeholder="Informe o ID da câmara vinculada"
+                oninput="limparErro('fk_camara')"
               />
-              <span class="erro" id="erro_fk_camera"></span>
+              <span class="erro" id="erro_fk_camara"></span>
             </div>
 
             <button type="button" class="botao" onclick="validarSensor()">
@@ -66,8 +66,8 @@
             </button>
 
             <p class="login-link">
-              Quer cadastrar uma câmera?
-              <a href="cadastro-camera.html">Cadastre aqui</a>
+              Quer cadastrar uma câmara?
+              <a href="cadastro-camara.html">Cadastre aqui</a>
             </p>
 
           </div>
@@ -110,13 +110,13 @@
           ponto_referencia.classList.remove("input-erro");
         }
 
-        if (fk_camera.value.trim() === "") {
-          erro_fk_camera.innerHTML = "ID da câmera é obrigatório";
-          fk_camera.classList.add("input-erro");
+        if (fk_camara.value.trim() === "") {
+          erro_fk_camara.innerHTML = "ID da câmara é obrigatório";
+          fk_camara.classList.add("input-erro");
           isValido = false;
         } else {
-          erro_fk_camera.innerHTML = "";
-          fk_camera.classList.remove("input-erro");
+          erro_fk_camara.innerHTML = "";
+          fk_camara.classList.remove("input-erro");
         }
 
         if (isValido) {
