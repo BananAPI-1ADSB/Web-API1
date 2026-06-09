@@ -207,3 +207,13 @@ const fetchAlertas = () => {
     headers: { "Content-type": "application/json" },
   });
 };
+
+const fetchCamarasLeituras = (a) => {
+  return fetch("http://localhost:8080/camaras/buscarTodas", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fkEntreposto: a,
+    }),
+  });
+};

@@ -529,30 +529,27 @@
     </div>
 
     <script>
-        
-        window.onload = function() {
-            fetchEntrepostosCadastrados();
-         }
-window.addEventListener('beforeunload', () => {
-    sessionStorage.removeItem('ID_CAMARA');
-    sessionStorage.removeItem('ID_ENTREPOSTO');
-});
+      window.onload = function () {
+        fetchEntrepostosCadastrados();
+      };
+      window.addEventListener("beforeunload", () => {
+        sessionStorage.removeItem("ID_CAMARA");
+        sessionStorage.removeItem("ID_ENTREPOSTO");
+      });
 
       const onchangeSelectEntreposto = () => {
         sessionStorage.ID_ENTREPOSTO = Number(
           document.getElementById("fk_entreposto_end").value,
         );
         fetchCamarasCadastradas(sessionStorage.ID_ENTREPOSTO);
-        clearInterval(interval);
       };
 
       const onchangeSelectCamara = () => {
-          sessionStorage.ID_CAMARA = Number(
-              document.getElementById("fk_camaras").value,
-            );
-            const interval = setInterval(atualizarLeitura, 3000);
-        };
-
+        sessionStorage.ID_CAMARA = Number(
+          document.getElementById("fk_camaras").value,
+        );
+        const interval = setInterval(atualizarLeitura, 3000);
+      };
 
       let leituras = [];
       let labels = [];
@@ -589,43 +586,42 @@ window.addEventListener('beforeunload', () => {
       }
 
       function atualizarKPIs() {
-        let estaveis = 0;
-        let atencao = 0;
-        let criticas = 0;
+        fetchCamarasLeituras(sessionStorage.ID_ENTREPOSTO).then((res) => {
+          if (res.ok) {
+            res.json().then((dados) => {
+              let estaveis = 0;
+              let atencao = 0;
+              let criticas = 0;
+              let registros = [];
 
-        for (let i = 0; i < temperaturas.length; i++) {
-          const status = obterStatus(temperaturas[i]);
+              for (let i = 0; i < dados.length; i++) {
+                let item = dados[i];
 
-          if (status === "estavel") {
-            estaveis++;
+                if (!registros.includes(item.idCamara)) {
+                  registros.push(item.idCamara);
+
+                  const status = obterStatus(item.temperatura);
+
+                  if (status === "estavel") {
+                    estaveis++;
+                  }
+
+                  if (status === "atencao") {
+                    atencao++;
+                  }
+
+                  if (status === "critico") {
+                    criticas++;
+                  }
+                }
+              }
+
+              qtdEstaveisElemento.innerHTML = estaveis;
+              qtdAtencaoElemento.innerHTML = atencao;
+              qtdCriticasElemento.innerHTML = criticas;
+            });
           }
-
-          if (status === "atencao") {
-            atencao++;
-          }
-
-          if (status === "critico") {
-            criticas++;
-          }
-        }
-
-        qtdEstaveisElemento.innerHTML = estaveis;
-        qtdAtencaoElemento.innerHTML = atencao;
-        qtdCriticasElemento.innerHTML = criticas;
-      }
-
-      function atualizarCamaraSelecionada() {
-        const temperaturaAtual = temperaturas[indiceCamaraSelecionada];
-      }
-
-      function gerarTemperatura() {
-        return Math.floor(Math.random() * (30 - 10 + 1)) + 10;
-      }
-
-      var temperaturas = [];
-
-      for (var i = 0; i < 11; i++) {
-        temperaturas.push(gerarTemperatura());
+        });
       }
 
       function atualizarHorario() {
@@ -771,8 +767,6 @@ window.addEventListener('beforeunload', () => {
               grafico.update();
             }
 
-            temperaturas[0] = valorTemperatura;
-
             if (indiceCamaraSelecionada === 0) {
               atualizarTemperaturaArduino(valorTemperatura);
             }
@@ -900,11 +894,6 @@ function statusGeralCamaras(){
           }
         });
       }
-
-      listaAlertas();
-      atualizarKPIs();
-
-      atualizarCamaraSelecionada();
 
       //   statusGeralCamaras();
     </script>
