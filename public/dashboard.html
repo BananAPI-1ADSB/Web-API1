@@ -594,8 +594,8 @@
               let criticas = 0;
               let registros = [];
 
-              for (let i = 0; i < dados.length; i++) {
-                let item = dados[i];
+              for (let i = dados.length; i > 0; i--) {
+                let item = dados[i - 1];
 
                 if (!registros.includes(item.idCamara)) {
                   registros.push(item.idCamara);
